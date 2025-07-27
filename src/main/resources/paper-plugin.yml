@@ -1,0 +1,9 @@
+name: MoJoins
+version: '1.0.0'
+main: ru.mairwunnx.mojoins.PluginUnit
+api-version: '1.21'
+prefix: "Mo'Joins"
+load: POSTWORLD
+authors: [ mairwunnx ]
+description: "🎉 Кастомные входы/выходы: сообщения, звуки, частицы, фейерверки и защита после входа."
+website: "https://github.com/mairwunnx/mojoins"
