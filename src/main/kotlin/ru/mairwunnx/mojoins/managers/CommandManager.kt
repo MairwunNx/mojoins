@@ -2,10 +2,6 @@ package ru.mairwunnx.mojoins.managers
 
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TextReplacementConfig
-import net.kyori.adventure.translation.GlobalTranslator.render
-import org.bukkit.entity.Player
 import ru.mairwunnx.mojoins.PluginUnit
 import ru.mairwunnx.mojoins.models.GeneralConfigurationModel
 import java.io.Closeable
