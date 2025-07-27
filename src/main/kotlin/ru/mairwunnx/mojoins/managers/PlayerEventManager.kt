@@ -57,8 +57,6 @@ class PlayerEventManager(private val plugin: PluginUnit) : Listener, Closeable {
     } else {
       plugin.logger.debug { "Quit broadcast skipped (due disabled in configuration)" }
     }
-
-    plugin.effects.cancel(p)
   }
 
   private fun Component.render(player: Player): Component {
