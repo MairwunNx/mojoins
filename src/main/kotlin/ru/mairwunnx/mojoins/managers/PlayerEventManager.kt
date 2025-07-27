@@ -1,8 +1,7 @@
 package ru.mairwunnx.mojoins.managers
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
+import net.kyori.adventure.text.TextReplacementConfig
 import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -15,8 +14,6 @@ import ru.mairwunnx.mojoins.models.GeneralConfigurationModel
 import java.io.Closeable
 
 class PlayerEventManager(private val plugin: PluginUnit) : Listener, Closeable {
-  private val mm = MiniMessage.miniMessage()
-
   @EventHandler(priority = HIGHEST)
   fun onJoin(e: PlayerJoinEvent) {
     val p = e.player
@@ -25,18 +22,31 @@ class PlayerEventManager(private val plugin: PluginUnit) : Listener, Closeable {
 
     e.joinMessage(null)
 
-    if ((first && cfg.broadcast.firstJoinEnabled) || (!first && cfg.broadcast.joinEnabled)) {
-      val msg = cfg.messages.join.render(p)
-      val recipients = audienceAll()
-      recipients.forEach { it.sendMessage(msg) }
-      plugin.logger.debug { "Join broadcast sent (first=$first) to ${recipients.size} recipients" }
-    } else {
-      plugin.logger.debug { "Join broadcast skipped (first=$first)" }
-    }
+    if (first) {
+      if (cfg.broadcast.firstJoinEnabled) {
+        p.sendMessage(cfg.messages.firstJoin.render(p))
+        plugin.logger.debug { "First-join personal message sent to ${p.name}" }
+      } else {
+        plugin.logger.debug { "First-join personal message skipped by config" }
+      }
 
-    if (first && cfg.broadcast.firstJoinEnabled) {
-      p.sendMessage(cfg.messages.firstJoin.render(p))
-      plugin.logger.debug { "First join personal message sent to ${p.name}" }
+      if (cfg.broadcast.joinEnabled) {
+        val msg = cfg.messages.join.render(p)
+        val recipients = audienceOthers(p)
+        recipients.forEach { it.sendMessage(msg) }
+        plugin.logger.debug { "Join broadcast (first=true) sent to ${recipients.size} recipients (excluding ${p.name})" }
+      } else {
+        plugin.logger.debug { "Join broadcast (first=true) skipped by config" }
+      }
+    } else {
+      if (cfg.broadcast.joinEnabled) {
+        val msg = cfg.messages.join.render(p)
+        val recipients = audienceAll()
+        recipients.forEach { it.sendMessage(msg) }
+        plugin.logger.debug { "Join broadcast (first=false) sent to ${recipients.size} recipients (including ${p.name})" }
+      } else {
+        plugin.logger.debug { "Join broadcast (first=false) skipped by config" }
+      }
     }
 
     plugin.effects.apply(p, first)
@@ -55,14 +65,11 @@ class PlayerEventManager(private val plugin: PluginUnit) : Listener, Closeable {
       recipients.forEach { it.sendMessage(quitMsg) }
       plugin.logger.debug { "Quit broadcast sent to ${recipients.size} recipients (excluding ${p.name})" }
     } else {
-      plugin.logger.debug { "Quit broadcast skipped (due disabled in configuration)" }
+      plugin.logger.debug { "Quit broadcast skipped by config" }
     }
   }
 
-  private fun Component.render(player: Player): Component {
-    val source = mm.serialize(this)
-    return mm.deserialize(source, Placeholder.unparsed("player", player.name))
-  }
+  private fun Component.render(player: Player) = replaceText(TextReplacementConfig.builder().matchLiteral("<player>").replacement(Component.text(player.name)).build())
 
   private fun audienceAll() = getOnlinePlayers()
   private fun audienceOthers(except: Player) = getOnlinePlayers().filter { it.uniqueId != except.uniqueId }
