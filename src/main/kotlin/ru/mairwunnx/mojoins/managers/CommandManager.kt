@@ -2,6 +2,10 @@ package ru.mairwunnx.mojoins.managers
 
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextReplacementConfig
+import net.kyori.adventure.translation.GlobalTranslator.render
+import org.bukkit.entity.Player
 import ru.mairwunnx.mojoins.PluginUnit
 import ru.mairwunnx.mojoins.models.GeneralConfigurationModel
 import java.io.Closeable
@@ -19,7 +23,7 @@ class CommandManager(private val plugin: PluginUnit) : Closeable {
       val cfg = plugin.configuration[GeneralConfigurationModel::class.java]
 
       if (args.isEmpty()) {
-        sender.sendMessage(cfg.messages.firstJoin)
+        sender.sendMessage(cfg.messages.system.incorrect)
         return
       }
 
@@ -41,19 +45,17 @@ class CommandManager(private val plugin: PluginUnit) : Closeable {
             sender.sendMessage(cfg.messages.system.reloadFailed)
           }
         }
-        "start" -> sender.sendMessage(cfg.messages.firstJoin)
         else -> sender.sendMessage(cfg.messages.system.incorrect)
       }
     }
 
     override fun suggest(css: CommandSourceStack, args: Array<String>): Collection<String> {
       if (args.size == 1) {
-        return listOf("reload", "start").filter { it.startsWith(args[0], ignoreCase = true) }
+        return listOf("reload").filter { it.startsWith(args[0], ignoreCase = true) }
       }
       return emptyList()
     }
   }
 
-  override fun close() {
-  }
+  override fun close() = Unit
 }
