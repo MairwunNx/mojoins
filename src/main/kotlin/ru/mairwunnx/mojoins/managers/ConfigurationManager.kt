@@ -10,12 +10,16 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.modules.SerializersModule
 import net.kyori.adventure.text.Component
+import org.bukkit.FireworkEffect
 import org.bukkit.Particle
 import org.bukkit.Sound
+import org.bukkit.potion.PotionEffectType
 import ru.mairwunnx.mojoins.PluginUnit
 import ru.mairwunnx.mojoins.models.GeneralConfigurationModel
 import ru.mairwunnx.mojoins.serializers.ComponentSerializer
+import ru.mairwunnx.mojoins.serializers.FireworkTypeSerializer
 import ru.mairwunnx.mojoins.serializers.ParticleSerializer
+import ru.mairwunnx.mojoins.serializers.PotionEffectTypeSerializer
 import ru.mairwunnx.mojoins.serializers.SoundSerializer
 import java.io.Closeable
 import java.util.concurrent.ConcurrentHashMap
@@ -26,6 +30,8 @@ class ConfigurationManager(val plugin: PluginUnit) : Closeable {
     contextual(Particle::class, ParticleSerializer)
     contextual(Sound::class, SoundSerializer)
     contextual(Component::class, ComponentSerializer)
+    contextual(PotionEffectType::class, PotionEffectTypeSerializer)
+    contextual(FireworkEffect.Type::class, FireworkTypeSerializer)
   }
 
   private val yaml = Yaml(
