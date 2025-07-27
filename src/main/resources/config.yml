@@ -9,7 +9,7 @@ debug: false         # Подробное логирование (в т.ч. от
 
 messages:
   # Сообщение о входе игрока (каждый раз). <player> — ник игрока.
-  join: "<green>➕</green> <white><player></white> <gray>зашёл на сервер.</gray>"
+  join: "<gradient:#00E676:#00C853>➕</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>присоединился к игре!</gray>"
 
   # Сообщение о первом входе.
   first_join: |-
@@ -25,7 +25,7 @@ messages:
     <gradient:#00C853:#00E676>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
 
   # Сообщение об отключении игрока.
-  quit: "<red>➖</red> <white><player></white> <gray>покинул сервер.</gray>"
+  quit: "<gradient:#26A69A:#00897B>➖</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>покинул игру!</gray>"
 
   system:
     # Служебные сообщения для команд/перезагрузки.
