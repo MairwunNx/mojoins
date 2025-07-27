@@ -12,14 +12,7 @@ messages:
   join: "<green>➕</green> <white><player></white> <gray>зашёл на сервер.</gray>"
 
   # Сообщение о первом входе.
-  first_join: |-
-    <center><gradient:#ffd54f:#ffa000>✦ ✦ ✦</gradient> <white><bold>Добро пожаловать, <player>!</bold></white> <gradient:#ffa000:#ffd54f>✦ ✦ ✦</gradient></center>
-    <center><gray>Мы рады видеть вас на сервере — приятной игры и ярких приключений.</gray></center>
-    <center><gray>• Уважайте других игроков.</gray></center>
-    <center><gray>• Стройте с умом и бережно относитесь к миру.</gray></center>
-    <center><gray>• Если что-то непонятно — задайте вопрос в чате.</gray></center>
-    <center><gradient:#ffa000:#ffd54f>✦ ✦ ✦</gradient></center>
-
+  first_join: "<gradient:#ff6b6b:#4ecdc4>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>\n<gradient:#ffd54f:#ffa000>✦</gradient> <white>Добро пожаловать, </white><gold><player></gold><white>!</white>\n<gray>Мы рады видеть вас на сервере — приятной игры и ярких приключений!</gray>\n<gradient:#ff6b6b:#4ecdc4>★</gradient> <white>— Уважайте других игроков.</white>\n<gradient:#ff6b6b:#4ecdc4>★</gradient> <white>— Стройте с умом и бережно относитесь к миру.</white>\n<gradient:#ff6b6b:#4ecdc4>★</gradient> <white>— Если что-то непонятно — задайте вопрос в чате.</white>\n<gradient:#4ecdc4:#ff6b6b>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>"
   # Сообщение об отключении игрока.
   quit: "<red>➖</red> <white><player></white> <gray>покинул сервер.</gray>"
 
