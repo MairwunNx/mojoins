@@ -20,28 +20,48 @@
 
 - ⚙️ **Горячая перезагрузка** конфигурации: `/mojoins reload`.
 
-## Требования
+## Заплейтестить
 
-- **Java 21**  
-- **Paper 1.21+**  
-- **Kotlin** (проект) / **Gradle 8+**
+У меня есть возможность дасть заплейтестить плагин, приходите на сервер `minecraft.ximanager.ru`, чтобы ознакомиться с плагинами (Mo'Bosses, Mo'Joins, Mo'Afks и McBuddy), на нем вы
+можете его испытать!
+
+Будем рады каждому игроку! Сервер с китайской культурой и обычное выживание.
+
+## Совместимость
+
+- Server: `Paper 1.21+`
+- Java: `21+`
 
 ## Установка
 
-1. Скачайте JAR или соберите проект:
-   ```bash
-   ./gradlew build
-   ```
+1. Скачайте `JAR` из релизов или соберите (см. ниже).
+2. Поместите файл в `plugins/` вашего Paper-сервера.
+3. Запустите сервер (или `/restart`).
+4. Отредактируйте `plugins/MoJoins/config.yml` при необходимости.
+5. Примените изменения командой `/mojoins reload`.
 
-Готовый файл будет в: `build/libs/mojoins-1.0.0-all.jar`
+## Сборка
 
-2. Поместите JAR в папку plugins вашего сервера Paper.
-3. Запустите сервер (или перезапустите).
-4. Отредактируйте plugins/MoJoins/config.yml по своему вкусу.
-5. Примените изменения:
-  ```mcfunction
-  /mojoins reload
-  ```
+Требования
+
+- Java 21
+- Gradle 8+
+
+```shell
+git clone https://github.com/mairwunnx/mojoins
+cd mojoins
+./gradlew build
+```
+
+Готовый JAR: `build/libs/mojoins-1.0.0-all.jar`
+
+## Стек
+
+- `Kotlin + Gradle Kotlin DSL`
+- `Paper API` (1.21+)
+- `Adventure (MiniMessage)` — компоненты и форматирование
+- `kotlinx-serialization` — типобезопасная конфигурация
+- `Registry API` — современные сериализаторы Sound/Particle
 
 ## Участие AI
 
