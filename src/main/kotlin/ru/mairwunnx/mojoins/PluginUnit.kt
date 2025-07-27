@@ -41,7 +41,6 @@ class PluginUnit : JavaPlugin() {
     effects = EffectsManager(this)
     players = PlayerEventManager(this)
 
-    server.pluginManager.registerEvents(effects, this)
     server.pluginManager.registerEvents(players, this)
 
     logger.info { "✅ Plugin Mo'Joins loaded" }
