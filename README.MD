@@ -53,7 +53,7 @@ cd mojoins
 ./gradlew build
 ```
 
-Готовый JAR: `build/libs/mojoins-1.0.0-all.jar`
+Готовый JAR: `build/libs/mojoins-1.1.0-all.jar`
 
 ## Стек
 
