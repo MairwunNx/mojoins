@@ -1,5 +1,5 @@
 name: MoJoins
-version: '1.1.0'
+version: '1.1.1'
 main: ru.mairwunnx.mojoins.PluginUnit
 api-version: '1.21'
 prefix: "Mo'Joins"
