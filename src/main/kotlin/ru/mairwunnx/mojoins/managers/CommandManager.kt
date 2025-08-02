@@ -11,7 +11,7 @@ class CommandManager(private val plugin: PluginUnit) : Closeable {
     runCatching {
       plugin.registerCommand("mojoins", "Mo'Joins admin", MoJoinsCommand())
     }.onFailure {
-      plugin.logger.warning({ "Failed to register Mo'Joins command, skipping\n${it.stackTraceToString()}" })
+      plugin.logger.warn({ "Failed to register Mo'Joins command, skipping\n${it.stackTraceToString()}" })
     }
   }
 
