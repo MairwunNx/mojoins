@@ -18,7 +18,9 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 | `GeoIp.kt` | Downloads the DB-IP country database into `geoip/` and looks up countries; lookups never touch the network |
 | `JoinListener.kt` | Country lookup at login, then the join, first join, and quit messages, rendered per recipient |
 | `JoinEffects.kt` | Sounds, the particle ring, the firework, potion effects; game ids resolve against registries on load |
-| `MoJoinsCommand.kt` | `/mojoins reload` and `/mojoins locale [player]` |
+| `MoJoinsCommand.kt` | `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
+| `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
+| `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
 
 ## Rules that keep it working
 
@@ -26,6 +28,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 - A new message gets a `Message` entry and a line in every bundled language (`src/main/resources/lang/`); `ResourcesTest` fails otherwise. Moonlands keeps its own copies in `minecraft/config/plugins/MoJoins/lang/`, so add the line there too.
 - A new config key gets a default in `Settings` and the same default in `src/main/resources/config.yml`; `ResourcesTest` checks they match.
 - Render messages with `Placeholder.unparsed` for player-provided text, so a name can't inject tags.
+- PlaceholderAPI goes through the `<papi:…>` tag only. Never run `%…%` replacement over whole texts: it would rewrite any percent sign in them, and its output carries legacy color codes that MiniMessage can't parse.
 - The GeoIP download and the country lookup run off the server thread (async scheduler, `AsyncPlayerPreLoginEvent`).
 - With `vanilla_log` on, the plugin writes “<name> joined the game” to the server log. Moonlands' site-api reads those lines; don't drop them.
 
@@ -36,8 +39,9 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 
 ## Releasing and Moonlands
 
-1. Run the “Release” workflow with the new version: `gh workflow run release.yml -R MairwunNx/mojoins -f version=X.Y.Z`. It builds with `-PreleaseVersion`, tags `vX.Y.Z`, and attaches `mojoins-X.Y.Z.jar` to a GitHub release. Nothing in the repo holds the version; local and CI builds are `dev`.
-2. To put it on Moonlands, point the Mo’Joins line in `minecraft/extras/jars.txt` (MairwunNx/minecraft) at the release jar, push, and deploy as its CLAUDE.md says. The server restarts only with the owner's go-ahead.
+1. Add a `## X.Y.Z` section to CHANGELOG.md, written for server owners, and push it.
+2. Run the “Release” workflow with the new version: `gh workflow run release.yml -R MairwunNx/mojoins -f version=X.Y.Z -f modrinth=true`. Its `changelog` field overrides the CHANGELOG.md section; one of the two must be there. It builds with `-PreleaseVersion`, tags `vX.Y.Z`, and attaches `mojoins-X.Y.Z.jar` to a GitHub release. Nothing in the repo holds the version; local and CI builds are `dev`.
+3. To put it on Moonlands, point the Mo’Joins line in `minecraft/extras/jars.txt` (MairwunNx/minecraft) at the release jar, push, and deploy as its CLAUDE.md says. The server restarts only with the owner's go-ahead.
 
 ## Modrinth
 

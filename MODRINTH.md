@@ -10,6 +10,8 @@
 - ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
 - 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
+- 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
+- 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
 ## Install
@@ -32,7 +34,7 @@ The country lookup needs no account and sends no address anywhere. On the first 
 
 ## Placeholders
 
-`<player>` is the player’s name, `<display_name>` their display name, `<online>` the number of players online. An empty message turns it off for that language.
+`<player>` is the player’s name, `<display_name>` their display name, `<online>` the number of players online. With [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi) installed, `<papi:name>` shows `%name%` for that player, like `<papi:luckperms_prefix><player>`. Mo’Joins doesn’t look for `%…%` in your text, so a percent sign stays a percent sign. An empty message turns it off for that language.
 
 ## Commands and permissions
 
@@ -40,8 +42,9 @@ The country lookup needs no account and sends no address anywhere. On the first 
 |---|---|
 | `/mojoins reload` | Reloads the config and the messages |
 | `/mojoins locale [player]` | Shows a player’s language, country, and game language |
+| `/mojoins silent` | Turns silent mode on or off for you |
 
-Both need `mojoins.admin`, which operators have by default.
+The first two need `mojoins.admin`, the last `mojoins.silent`; operators have both by default. Silent mode stays on across restarts. It hides the chat lines, sounds, and particles; you still show up in the player list.
 
 ## Links
 

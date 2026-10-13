@@ -1,5 +1,5 @@
 # Deutsch. MiniMessage-Format: https://docs.advntr.dev/minimessage/format
-# Platzhalter: <player>, <display_name>, <online>. Ein leerer Text schaltet die Nachricht ab.
+# Platzhalter: <player>, <display_name>, <online> und <papi:name> für %name% aus PlaceholderAPI.
 
 join: "<gradient:#00E676:#00C853>+</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>hat das Spiel betreten</gray>"
 
@@ -22,6 +22,11 @@ quit: "<gradient:#26A69A:#00897B>−</gradient> <color:#1ABC9C><bold><player></b
 
 reloaded: "<green>Mo’Joins neu geladen.</green>"
 reload_failed: "<red>Mo’Joins mit Fehlern neu geladen.</red> <gray>Schau ins Server-Log.</gray>"
-usage: "<gray>Nutze</gray> <white>/mojoins reload</white> <gray>oder</gray> <white>/mojoins locale [Spieler]</white>"
+usage: "<gray>Nutze</gray> <white>/mojoins reload</white><gray>,</gray> <white>/mojoins locale [Spieler]</white> <gray>oder</gray> <white>/mojoins silent</white>"
 locale_info: "<white><player></white><gray>: Sprache</gray> <white><language></white><gray>, Land</gray> <white><country></white><gray>, Spielsprache</gray> <white><client></white>"
 player_not_found: "<red><player> ist nicht online.</red>"
+no_permission: "<red>Diesen Befehl darfst du nicht nutzen.</red>"
+players_only: "<red>Das geht nur als Spieler.</red>"
+silent_on: "<gray>Stiller Modus an: Niemand sieht, wann du kommst und gehst.</gray>"
+silent_off: "<gray>Stiller Modus aus: Die anderen sehen wieder, wann du kommst und gehst.</gray>"
+silent_join: "<dark_gray>Du bist still beigetreten. Abschalten mit</dark_gray> <gray>/mojoins silent</gray>"

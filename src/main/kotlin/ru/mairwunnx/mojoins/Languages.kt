@@ -16,6 +16,11 @@ enum class Message(val key: String) {
   USAGE("usage"),
   LOCALE_INFO("locale_info"),
   PLAYER_NOT_FOUND("player_not_found"),
+  NO_PERMISSION("no_permission"),
+  SILENT_ON("silent_on"),
+  SILENT_OFF("silent_off"),
+  SILENT_JOIN("silent_join"),
+  PLAYERS_ONLY("players_only"),
 }
 
 /**

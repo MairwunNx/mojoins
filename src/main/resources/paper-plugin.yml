@@ -10,3 +10,12 @@ permissions:
   mojoins.admin:
     description: Use /mojoins reload and /mojoins locale
     default: op
+  mojoins.silent:
+    description: Join and leave without messages, after /mojoins silent
+    default: op
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true

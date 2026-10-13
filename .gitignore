@@ -120,3 +120,4 @@ runs/
 .fake
 # Kotlin compiler caches
 .kotlin/
+release-notes.md

@@ -1,5 +1,5 @@
 # Русский. Формат MiniMessage: https://docs.advntr.dev/minimessage/format
-# Подстановки: <player>, <display_name>, <online>. Пустая строка отключает сообщение.
+# Подстановки: <player>, <display_name>, <online> и <papi:name> для %name% из PlaceholderAPI.
 
 join: "<gradient:#00E676:#00C853>+</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>зашёл в игру</gray>"
 
@@ -22,6 +22,11 @@ quit: "<gradient:#26A69A:#00897B>−</gradient> <color:#1ABC9C><bold><player></b
 
 reloaded: "<green>Mo’Joins перезагружен.</green>"
 reload_failed: "<red>Mo’Joins перезагружен с ошибками.</red> <gray>Загляните в лог сервера.</gray>"
-usage: "<gray>Команды:</gray> <white>/mojoins reload</white> <gray>или</gray> <white>/mojoins locale [игрок]</white>"
+usage: "<gray>Команды:</gray> <white>/mojoins reload</white><gray>,</gray> <white>/mojoins locale [игрок]</white> <gray>и</gray> <white>/mojoins silent</white>"
 locale_info: "<white><player></white><gray>: язык</gray> <white><language></white><gray>, страна</gray> <white><country></white><gray>, язык игры</gray> <white><client></white>"
 player_not_found: "<red>Игрока <player> нет в сети.</red>"
+no_permission: "<red>Эта команда вам недоступна.</red>"
+players_only: "<red>Это может сделать только игрок.</red>"
+silent_on: "<gray>Тихий режим включён: другие не увидят, как вы заходите и выходите.</gray>"
+silent_off: "<gray>Тихий режим выключен: другие снова видят ваши входы и выходы.</gray>"
+silent_join: "<dark_gray>Вы зашли тихо. Выключить:</dark_gray> <gray>/mojoins silent</gray>"

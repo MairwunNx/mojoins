@@ -1,5 +1,5 @@
 # Español. Formato MiniMessage: https://docs.advntr.dev/minimessage/format
-# Marcadores: <player>, <display_name>, <online>. Una cadena vacía desactiva el mensaje.
+# Marcadores: <player>, <display_name>, <online> y <papi:name> para %name% de PlaceholderAPI.
 
 join: "<gradient:#00E676:#00C853>+</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>se unió a la partida</gray>"
 
@@ -22,6 +22,11 @@ quit: "<gradient:#26A69A:#00897B>−</gradient> <color:#1ABC9C><bold><player></b
 
 reloaded: "<green>Mo’Joins recargado.</green>"
 reload_failed: "<red>Mo’Joins se recargó con errores.</red> <gray>Revisa el registro del servidor.</gray>"
-usage: "<gray>Usa</gray> <white>/mojoins reload</white> <gray>o</gray> <white>/mojoins locale [jugador]</white>"
+usage: "<gray>Usa</gray> <white>/mojoins reload</white><gray>,</gray> <white>/mojoins locale [jugador]</white> <gray>o</gray> <white>/mojoins silent</white>"
 locale_info: "<white><player></white><gray>: idioma</gray> <white><language></white><gray>, país</gray> <white><country></white><gray>, idioma del juego</gray> <white><client></white>"
 player_not_found: "<red><player> no está conectado.</red>"
+no_permission: "<red>No puedes usar este comando.</red>"
+players_only: "<red>Solo un jugador puede hacer esto.</red>"
+silent_on: "<gray>Modo silencioso activado: nadie verá cuándo entras o sales.</gray>"
+silent_off: "<gray>Modo silencioso desactivado: los demás vuelven a ver cuándo entras y sales.</gray>"
+silent_join: "<dark_gray>Entraste en silencio. Para desactivarlo:</dark_gray> <gray>/mojoins silent</gray>"

@@ -18,7 +18,8 @@ import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Replaces the vanilla join and quit lines with the configured ones, each shown to every player in
- * their own language. The country lookup runs during login, off the server thread.
+ * their own language. The country lookup runs during login, off the server thread. Players with
+ * silent mode on get none of it: no lines, sounds, or particles, only a note to themselves.
  */
 class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
   private val countries = ConcurrentHashMap<UUID, String>()
@@ -37,6 +38,13 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
     val broadcast = plugin.settings.broadcast
     event.joinMessage(null)
 
+    if (plugin.silent.isOn(player)) {
+      send(player, Message.SILENT_JOIN, player)
+      if (broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} joined the game")
+      plugin.log.debug { "${player.name} joined silently" }
+      return
+    }
+
     if (firstJoin && broadcast.firstJoin) {
       send(player, Message.FIRST_JOIN, player)
       announce(Message.FIRST_JOIN_BROADCAST, player, except = player)
@@ -54,7 +62,7 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
     val player = event.player
     if (plugin.settings.enabled) {
       event.quitMessage(null)
-      if (plugin.settings.broadcast.quit) announce(Message.QUIT, player, except = player)
+      if (plugin.settings.broadcast.quit && !plugin.silent.isOn(player)) announce(Message.QUIT, player, except = player)
       if (plugin.settings.broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} left the game")
     }
     countries.remove(player.uniqueId)
@@ -88,5 +96,6 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
     Placeholder.unparsed("player", subject.name),
     Placeholder.component("display_name", subject.displayName()),
     Placeholder.unparsed("online", Bukkit.getOnlinePlayers().size.toString()),
+    Placeholders.resolver(subject),
   )
 }

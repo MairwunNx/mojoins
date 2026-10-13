@@ -14,6 +14,7 @@ class MoJoinsPlugin : JavaPlugin() {
   val log = Log(logger) { settings.debug }
   val geoIp by lazy { GeoIp(dataFolder.resolve("geoip"), log) }
   lateinit var listener: JoinListener; private set
+  val silent by lazy { Silent(NamespacedKey(this, "silent")) }
 
   private val fireworkKey by lazy { NamespacedKey(this, "join_firework") }
   private var geoIpTask: BukkitTask? = null
@@ -22,8 +23,9 @@ class MoJoinsPlugin : JavaPlugin() {
     if (!reload()) log.warn("Started with the default settings; fix config.yml and run /mojoins reload")
     listener = JoinListener(this)
     server.pluginManager.registerEvents(listener, this)
-    registerCommand("mojoins", "Reload Mo’Joins or check a player’s language", MoJoinsCommand(this))
+    registerCommand("mojoins", "Reload Mo’Joins, check a player’s language, or join silently", MoJoinsCommand(this))
     log.info("Mo’Joins ${pluginMeta.version} is on: ${languages.codes.sorted().joinToString()}, default ${resolver.default}")
+    if (Placeholders.available) log.info("PlaceholderAPI found: <papi:…> tags work in messages")
   }
 
   override fun onDisable() {

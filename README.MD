@@ -7,11 +7,13 @@
 ## What you get
 
 - 🌍 **Every player reads their own language.** The plugin finds the player’s country by IP and picks a language for it: English, Russian, Spanish, Portuguese, and German come bundled. Everyone in the chat sees the same join line, each in their own language.
-- 📨 **Messages for every moment:** a join line, a personal welcome on the first join, a “say hi” line to everyone else, and a quit line. Placeholders: `<player>`, `<display_name>`, `<online>`.
+- 📨 **Messages for every moment:** a join line, a personal welcome on the first join, a “say hi” line to everyone else, and a quit line. Placeholders: `<player>`, `<display_name>`, `<online>`, and PlaceholderAPI’s through `<papi:…>`.
 - 🔊 **Sounds** for a join and for a first join.
 - ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
 - 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
+- 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
+- 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
 ## Try it live
@@ -59,8 +61,13 @@ A key missing from a language file comes from the default language. An empty str
 |---|---|
 | `/mojoins reload` | Reloads `config.yml` and the language files |
 | `/mojoins locale [player]` | Shows a player’s language, country, and game language |
+| `/mojoins silent` | Turns silent mode on or off for you |
 
-Both need `mojoins.admin`, which operators have by default.
+The first two need `mojoins.admin`, the last `mojoins.silent`; operators have both by default. Silent mode stays on across restarts and works only while you hold `mojoins.silent`. It hides the chat lines, sounds, and particles; you still show up in the player list.
+
+## PlaceholderAPI
+
+With [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi) installed, write `<papi:name>` in any message to show `%name%` for the player who joined or left: `<papi:luckperms_prefix><player>`. Mo’Joins doesn’t look for `%…%` in your text, so a percent sign stays a percent sign. Without PlaceholderAPI the tags show nothing.
 
 ## Build
 

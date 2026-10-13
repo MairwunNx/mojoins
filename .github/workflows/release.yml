@@ -7,6 +7,9 @@ on:
       version:
         description: "Version, like 2.0.0"
         required: true
+      changelog:
+        description: "Changelog in Markdown; leave empty to take the version's section from CHANGELOG.md"
+        required: false
       modrinth:
         description: "Also publish to Modrinth (needs the MODRINTH_TOKEN secret)"
         type: boolean
@@ -23,6 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ inputs.version }}
+      CHANGELOG: ${{ inputs.changelog }}
+      # Outside the repo files, but in the workspace, where Gradle finds it by a relative path.
+      NOTES: release-notes.md
     steps:
       - uses: actions/checkout@v7
       - name: Check the version
@@ -31,6 +37,21 @@ jobs:
           if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null; then
             echo "::error::v$VERSION is already released"; exit 1
           fi
+      - name: Write the release notes
+        shell: python
+        run: |
+          import os, re, sys
+          version, typed = os.environ["VERSION"], os.environ["CHANGELOG"].strip()
+          if typed:
+              notes = typed
+          else:
+              text = open("CHANGELOG.md", encoding="utf-8").read()
+              match = re.search(rf"^## {re.escape(version)}\s*$(.*?)(?=^## |\Z)", text, re.M | re.S)
+              notes = match.group(1).strip() if match else ""
+          if not notes:
+              sys.exit(f"::error::No changelog: add a “## {version}” section to CHANGELOG.md or fill the changelog field")
+          open(os.environ["NOTES"], "w", encoding="utf-8").write(notes + "\n")
+          print(notes)
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
@@ -39,12 +60,12 @@ jobs:
       - name: Build and test
         run: ./gradlew build -PreleaseVersion="$VERSION"
       - name: Publish the GitHub release
-        run: gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Mo’Joins $VERSION" --generate-notes "build/libs/mojoins-$VERSION.jar"
+        run: gh release create "v$VERSION" --target "$GITHUB_SHA" --title "Mo’Joins $VERSION" --notes-file "$NOTES" "build/libs/mojoins-$VERSION.jar"
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Publish to Modrinth
         if: inputs.modrinth
         # Minotaur reads the project while it runs, which the configuration cache doesn't allow.
-        run: ./gradlew modrinth -PreleaseVersion="$VERSION" --no-configuration-cache
+        run: ./gradlew modrinth -PreleaseVersion="$VERSION" -PchangelogFile="$NOTES" --no-configuration-cache
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

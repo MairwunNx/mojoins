@@ -12,10 +12,12 @@ version = (findProperty("releaseVersion") as String?)?.takeIf { it.isNotBlank() 
 repositories {
   mavenCentral()
   maven("https://repo.papermc.io/repository/maven-public/")
+  maven("https://repo.extendedclip.com/releases/")
 }
 
 dependencies {
   compileOnly("io.papermc.paper:paper-api:26.3.build.180-stable")
+  compileOnly("me.clip:placeholderapi:2.12.3")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
   implementation("com.charleskorn.kaml:kaml:0.104.0")
   implementation("com.maxmind.db:maxmind-db:4.2.0")
@@ -66,7 +68,9 @@ modrinth {
   uploadFile.set(tasks.shadowJar)
   gameVersions.addAll("26.3")
   loaders.addAll("paper", "purpur")
-  changelog = "https://github.com/MairwunNx/mojoins/releases/tag/v${project.version}"
+  // The release workflow writes the notes to a file; a local upload falls back to the GitHub release.
+  changelog = (findProperty("changelogFile") as String?)?.let { file(it).readText() }
+    ?: "https://github.com/MairwunNx/mojoins/releases/tag/v${project.version}"
   syncBodyFrom = file("MODRINTH.md").readText()
 }
 

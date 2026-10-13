@@ -8,13 +8,29 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-/** `/mojoins reload` reloads the config and languages; `/mojoins locale [player]` shows the language a player gets and why. */
+/**
+ * `/mojoins reload` reloads the config and languages; `/mojoins locale [player]` shows the language a
+ * player gets and why; `/mojoins silent` switches silent joins. The first two need `mojoins.admin`,
+ * the last `mojoins.silent`.
+ */
 class MoJoinsCommand(private val plugin: MoJoinsPlugin) : BasicCommand {
-  override fun permission() = "mojoins.admin"
+  override fun canUse(sender: CommandSender) = sender.hasPermission(ADMIN) || sender.hasPermission(Silent.PERMISSION)
 
   override fun execute(source: CommandSourceStack, args: Array<String>) {
     val sender = source.sender
-    when (args.firstOrNull()?.lowercase()) {
+    val sub = args.firstOrNull()?.lowercase()
+    val needed = when (sub) {
+      "silent" -> Silent.PERMISSION
+      "reload", "locale" -> ADMIN
+      else -> null
+    }
+    if (needed != null && !sender.hasPermission(needed)) return reply(sender, Message.NO_PERMISSION)
+
+    when (sub) {
+      "silent" -> {
+        val player = sender as? Player ?: return reply(sender, Message.PLAYERS_ONLY)
+        reply(sender, if (plugin.silent.toggle(player)) Message.SILENT_ON else Message.SILENT_OFF)
+      }
       "reload" -> {
         val ok = plugin.reload()
         reply(sender, if (ok) Message.RELOADED else Message.RELOAD_FAILED)
@@ -35,7 +51,11 @@ class MoJoinsCommand(private val plugin: MoJoinsPlugin) : BasicCommand {
   }
 
   override fun suggest(source: CommandSourceStack, args: Array<String>): Collection<String> = when (args.size) {
-    0, 1 -> listOf("reload", "locale").filter { it.startsWith(args.firstOrNull().orEmpty(), ignoreCase = true) }
+    0, 1 -> listOfNotNull(
+      "reload".takeIf { source.sender.hasPermission(ADMIN) },
+      "locale".takeIf { source.sender.hasPermission(ADMIN) },
+      "silent".takeIf { source.sender.hasPermission(Silent.PERMISSION) },
+    ).filter { it.startsWith(args.firstOrNull().orEmpty(), ignoreCase = true) }
     2 if args[0].equals("locale", ignoreCase = true) ->
       Bukkit.getOnlinePlayers().map { it.name }.filter { it.startsWith(args[1], ignoreCase = true) }
     else -> emptyList()
@@ -44,5 +64,9 @@ class MoJoinsCommand(private val plugin: MoJoinsPlugin) : BasicCommand {
   private fun reply(sender: CommandSender, message: Message, vararg placeholders: TagResolver) {
     val language = (sender as? Player)?.let(plugin.listener::languageOf) ?: plugin.resolver.default
     plugin.languages.render(language, message, *placeholders)?.let(sender::sendMessage)
+  }
+
+  private companion object {
+    const val ADMIN = "mojoins.admin"
   }
 }
