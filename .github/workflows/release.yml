@@ -44,6 +44,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Publish to Modrinth
         if: inputs.modrinth
-        run: ./gradlew modrinth -PreleaseVersion="$VERSION"
+        # Minotaur reads the project while it runs, which the configuration cache doesn't allow.
+        run: ./gradlew modrinth -PreleaseVersion="$VERSION" --no-configuration-cache
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

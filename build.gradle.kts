@@ -67,10 +67,9 @@ modrinth {
   gameVersions.addAll("26.3")
   loaders.addAll("paper", "purpur")
   changelog = "https://github.com/MairwunNx/mojoins/releases/tag/v${project.version}"
-  syncBodyFrom = providers.fileContents(layout.projectDirectory.file("README.md")).asText
+  syncBodyFrom = file("README.md").readText()
 }
 
 tasks.modrinth {
   dependsOn(tasks.modrinthSyncBody)
-  notCompatibleWithConfigurationCache("Minotaur reads the project at execution time")
 }
