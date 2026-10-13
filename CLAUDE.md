@@ -41,7 +41,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 
 ## Modrinth
 
-Prepared, not published. The project slug is `mojoins`; `./gradlew modrinth` uploads the jar and syncs README.md as the description. To publish for the first time: create the project on modrinth.com with the slug `mojoins`, the icon `media/icon.png`, and `media/og-adv-image.png` in the gallery; add a `MODRINTH_TOKEN` secret to this repo; then run the release workflow with `modrinth: true`. Modrinth needs a license, and the repo has none yet: ask the owner which one.
+The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs README.md as the description. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
 
 ## Commits
 

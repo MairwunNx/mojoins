@@ -6,7 +6,7 @@
 
 ## What you get
 
-- 🌍 **Every player reads their own language.** The plugin finds the player’s country by IP and picks a language for it: English, Russian, and Spanish come bundled. Everyone in the chat sees the same join line, each in their own language.
+- 🌍 **Every player reads their own language.** The plugin finds the player’s country by IP and picks a language for it: English, Russian, Spanish, Portuguese, and German come bundled. Everyone in the chat sees the same join line, each in their own language.
 - 📨 **Messages for every moment:** a join line, a personal welcome on the first join, a “say hi” line to everyone else, and a quit line. Placeholders: `<player>`, `<display_name>`, `<online>`.
 - 🔊 **Sounds** for a join and for a first join.
 - ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
@@ -38,7 +38,7 @@ Join at `minecraft.mairwunnx.com`. The site has the live map, player stats, and 
 
 The plugin tries the sources in `locales.sources`, in order:
 
-1. **`ip`:** the country of the player’s IP address. `locales.countries` maps languages to country codes: Russia, Belarus, and Kazakhstan get Russian; Spain and Latin America get Spanish.
+1. **`ip`:** the country of the player’s IP address. `locales.countries` maps languages to country codes: Russia, Belarus, and Kazakhstan get Russian; Spain and Latin America get Spanish; Brazil and Portugal get Portuguese; Germany, Austria, and Switzerland get German.
 2. **`client`:** the language set in the player’s game, when a file in `lang/` matches it.
 
 When nothing matches, the player gets `locales.default`. Check what a player got with `/mojoins locale <player>`.
@@ -47,8 +47,8 @@ The country lookup needs no account and sends no address anywhere. On the first 
 
 ### Add a language
 
-1. Copy `lang/en.yml` to, say, `lang/de.yml` and translate it.
-2. Add a line to `locales.countries`: `de: [ DE, AT, CH ]`.
+1. Copy `lang/en.yml` to, say, `lang/it.yml` and translate it.
+2. Add a line to `locales.countries`: `it: [ IT, SM, VA ]`.
 3. Run `/mojoins reload`.
 
 A key missing from a language file comes from the default language. An empty string turns a message off for that language.
@@ -94,6 +94,10 @@ AI wrote parts of the documentation and some of the code: the serializers and th
 ## From the same author
 
 [Mo’Bosses](https://github.com/mairwunnx/mobosses)—🏆 an RPG plugin that turns ordinary mobs into epic bosses, with a deep player progression system. Every fight matters, and every level opens something new. ⚔
+
+## License
+
+MIT, see [LICENSE](https://github.com/MairwunNx/mojoins/blob/master/LICENSE).
 
 ## Credits
 

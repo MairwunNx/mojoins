@@ -118,6 +118,8 @@ data class Settings(
         "ES", "MX", "AR", "CO", "CL", "PE", "VE", "EC", "GT", "CU", "BO", "DO", "HN",
         "PY", "SV", "NI", "CR", "PA", "UY", "PR", "GQ",
       ),
+      "pt" to listOf("BR", "PT", "AO", "MZ", "CV", "GW", "ST", "TL"),
+      "de" to listOf("DE", "AT", "CH", "LI", "LU"),
     )
   }
 }

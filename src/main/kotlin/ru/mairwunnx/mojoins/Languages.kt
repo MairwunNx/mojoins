@@ -39,7 +39,7 @@ class Languages(private val texts: Map<String, Map<String, String>>, val default
 
   companion object {
     const val FALLBACK = "en"
-    val BUNDLED = listOf("en", "ru", "es")
+    val BUNDLED = listOf("en", "ru", "es", "pt", "de")
   }
 }
 
