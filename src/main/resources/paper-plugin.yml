@@ -1,9 +1,12 @@
 name: MoJoins
-version: '1.1.1'
-main: ru.mairwunnx.mojoins.PluginUnit
-api-version: '1.21'
-prefix: "Mo'Joins"
+version: '${version}'
+main: ru.mairwunnx.mojoins.MoJoinsPlugin
+api-version: '26.3'
 load: POSTWORLD
-authors: [ mairwunnx ]
-description: "🎉 Кастомные входы/выходы: сообщения, звуки, частицы, фейерверки и защита после входа."
-website: "https://github.com/mairwunnx/mojoins"
+authors: [ MairwunNx ]
+description: "Join and quit messages in each player’s language, picked by their IP: a welcome for newcomers, sounds, particles, and an optional firework."
+website: "https://github.com/MairwunNx/mojoins"
+permissions:
+  mojoins.admin:
+    description: Use /mojoins reload and /mojoins locale
+    default: op

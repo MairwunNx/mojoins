@@ -1,0 +1,27 @@
+# Русский. Формат MiniMessage: https://docs.advntr.dev/minimessage/format
+# Подстановки: <player>, <display_name>, <online>. Пустая строка отключает сообщение.
+
+join: "<gradient:#00E676:#00C853>+</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>зашёл в игру</gray>"
+
+# Только новичку.
+first_join: |-
+  <gradient:#00E676:#00C853>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
+
+  <white>Добро пожаловать, </white><color:#1ABC9C><bold><player></bold></color><white>!</white>
+  <gray>Рады видеть вас на сервере. Приятной игры!</gray>
+
+  <gradient:#00E676:#1ABC9C>★</gradient> <white>Уважайте других игроков.</white>
+  <gradient:#00E676:#1ABC9C>★</gradient> <white>Стройте с умом и берегите мир.</white>
+
+  <gradient:#00C853:#00E676>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
+
+# Всем остальным, когда заходит новичок.
+first_join_broadcast: "<gradient:#00E676:#00C853>✦</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>впервые на сервере. Поздоровайтесь!</gray>"
+
+quit: "<gradient:#26A69A:#00897B>−</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>вышел из игры</gray>"
+
+reloaded: "<green>Mo’Joins перезагружен.</green>"
+reload_failed: "<red>Mo’Joins перезагружен с ошибками.</red> <gray>Загляните в лог сервера.</gray>"
+usage: "<gray>Команды:</gray> <white>/mojoins reload</white> <gray>или</gray> <white>/mojoins locale [игрок]</white>"
+locale_info: "<white><player></white><gray>: язык</gray> <white><language></white><gray>, страна</gray> <white><country></white><gray>, язык игры</gray> <white><client></white>"
+player_not_found: "<red>Игрока <player> нет в сети.</red>"

@@ -1,59 +1,62 @@
 ###############################################################################
-#                          Mo’Joins Configuration                             #
+#                          Mo’Joins configuration                             #
 ###############################################################################
-# Плагин для кастомизации входа/выхода игроков: сообщения, звуки, эффекты,
-# визуалы (частицы/фейерверк). Формат сообщений — MiniMessage.
+# Messages live in lang/<language>.yml and use MiniMessage. Every key here has a
+# default, so you can delete the ones you don't change. /mojoins reload applies
+# changes without a restart.
 
-enabled: true        # Включает/выключает плагин целиком.
-debug: false         # Подробное логирование (в т.ч. отладочные сообщения).
+enabled: true   # false turns the plugin off; vanilla join and quit lines come back.
+debug: false    # true logs how each player's language was picked.
 
-messages:
-  # Сообщение о входе игрока (каждый раз). <player> — ник игрока.
-  join: "<gradient:#00E676:#00C853>➕</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>присоединился к игре!</gray>"
+locales:
+  # Players nothing else matches, and the console, get this language.
+  default: en
+  # Where a player's language comes from, tried in order:
+  #   ip     — the country of their IP address, through the lists below;
+  #   client — the language set in their game, when a lang/ file matches it.
+  sources: [ ip, client ]
+  # Language → the ISO 3166 country codes that get it. Add a lang/de.yml and a
+  # “de: [ DE, AT, CH ]” line to add German. Players behind a proxy or relay show
+  # up with its address, so they get the relay's country.
+  countries:
+    ru: [ RU, BY, KZ, KG, TJ, UZ, AM, AZ, MD, GE, TM ]
+    es: [ ES, MX, AR, CO, CL, PE, VE, EC, GT, CU, BO, DO, HN, PY, SV, NI, CR, PA, UY, PR, GQ ]
 
-  # Сообщение о первом входе.
-  first_join: |-
-    <gradient:#00E676:#00C853>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
+geoip:
+  # The country database: DB-IP's free “IP to Country Lite”, CC BY 4.0, about 4 MB.
+  # The plugin downloads it into geoip/ and refreshes it once it's older than
+  # refresh_days. Lookups happen on your server; no address leaves it.
+  enabled: true
+  url: "https://download.db-ip.com/free/dbip-country-lite-{year}-{month}.mmdb.gz"
+  refresh_days: 30
 
-    <gradient:#00E676:#1ABC9C>✦</gradient> <white>Добро пожаловать, </white><color:#1ABC9C><bold><player></bold></color><white>!</white>
-
-    <gray>Мы рады видеть вас на сервере — приятной игры!</gray>
-
-    <gradient:#00E676:#1ABC9C>★</gradient> <white>— Уважайте других игроков.</white>
-    <gradient:#00E676:#1ABC9C>★</gradient> <white>— Стройте с умом и бережно относитесь к миру.</white>
-
-    <gradient:#00C853:#00E676>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
-
-  # Сообщение об отключении игрока.
-  quit: "<gradient:#26A69A:#00897B>➖</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>покинул игру!</gray>"
-
-  system:
-    # Служебные сообщения для команд/перезагрузки.
-    permission: "<red>Недостаточно прав.</red>"
-    incorrect: "<yellow>Неверная команда.</yellow> <gray>Используйте:</gray> <white>/mojoins reload</white>"
-    reloaded: "<green>Настройки перезагружены.</green>"
-    reload_failed: "<red>Перезагрузка не удалась.</red> <gray>Проверьте логи сервера.</gray>"
-
-# Список эффектов, применяемых каждый раз при входе.
-# name: тип (например, resistance, saturation, speed, haste, fire_resistance, absorption и т.п.)
-# duration: длительность в секундах
-# amplifier: уровень (0 = базовый)
-effects:
-  - { name: resistance, duration: 10, amplifier: 2 }
+broadcast:
+  join: true          # “join” to everyone when a player comes back.
+  first_join: true    # “first_join” to the newcomer and “first_join_broadcast” to everyone else.
+  quit: true          # “quit” to everyone else.
+  vanilla_log: true   # Writes “<name> joined the game” to the server log for tools that read it.
 
 sounds:
-  # Звук при обычном входе.
   join: { enabled: true, key: "minecraft:entity.experience_orb.pickup", volume: 1.0, pitch: 1.0 }
-  # Звук при первом входе.
   first_join: { enabled: true, key: "minecraft:entity.player.levelup", volume: 1.0, pitch: 1.0 }
 
-visuals:
-  # Частицы — один «венок» из точек вокруг игрока при входе.
-  particles: { enabled: true, type: "minecraft:happy_villager", ring: { radius: 1.5, points: 12 } }
-  # Фейерверк — взлетает над игроком при входе.
-  # type: BALL | BALL_LARGE | STAR | BURST | CREEPER
-  # colors / fade_colors: цвета вспышки/затухания — hex (#RRGGBB) или имена (red, lime, sky, …)
-  firework: { enabled: true, power: 1, type: BALL, flicker: true, trail: true, colors: [ "#FFD54F", "#FFFFFF" ], fade_colors: [ "#FFA000" ] }
+# A ring of particles around the player who joined.
+particles: { enabled: true, type: "minecraft:happy_villager", radius: 1.5, points: 12 }
 
-# Управление широковещательной отправкой join/first_join/quit.
-broadcast: { join_enabled: true, first_join_enabled: true, quit_enabled: true }
+# A rocket over the player who joined.
+# type: BALL, BALL_LARGE, STAR, BURST, or CREEPER.
+# colors: #RRGGBB, r,g,b, or a name (white, red, gold, lime, sky, …).
+# damage: whether its blast hurts players nearby.
+firework:
+  enabled: false
+  power: 1
+  type: BALL
+  flicker: true
+  trail: true
+  colors: [ "#FFD54F", "#FFFFFF" ]
+  fade_colors: [ "#FFA000" ]
+  damage: false
+
+# Potion effects on every join. duration is in seconds; amplifier 0 is level I.
+# For example: [ { name: resistance, duration: 10, amplifier: 1 } ]
+effects: []

@@ -1,0 +1,27 @@
+# English. MiniMessage format: https://docs.advntr.dev/minimessage/format
+# Placeholders: <player>, <display_name>, <online>. An empty string turns a message off.
+
+join: "<gradient:#00E676:#00C853>+</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>joined the game</gray>"
+
+# To the newcomer only.
+first_join: |-
+  <gradient:#00E676:#00C853>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
+
+  <white>Welcome, </white><color:#1ABC9C><bold><player></bold></color><white>!</white>
+  <gray>Glad to have you here. Have fun!</gray>
+
+  <gradient:#00E676:#1ABC9C>★</gradient> <white>Respect other players.</white>
+  <gradient:#00E676:#1ABC9C>★</gradient> <white>Build with care and look after the world.</white>
+
+  <gradient:#00C853:#00E676>★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</gradient>
+
+# To everyone else when a newcomer joins.
+first_join_broadcast: "<gradient:#00E676:#00C853>✦</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>joined for the first time. Say hi!</gray>"
+
+quit: "<gradient:#26A69A:#00897B>−</gradient> <color:#1ABC9C><bold><player></bold></color> <gray>left the game</gray>"
+
+reloaded: "<green>Mo’Joins reloaded.</green>"
+reload_failed: "<red>Mo’Joins reloaded with errors.</red> <gray>Check the server log.</gray>"
+usage: "<gray>Use</gray> <white>/mojoins reload</white> <gray>or</gray> <white>/mojoins locale [player]</white>"
+locale_info: "<white><player></white><gray>: language</gray> <white><language></white><gray>, country</gray> <white><country></white><gray>, game language</gray> <white><client></white>"
+player_not_found: "<red>No player named <player> is online.</red>"
