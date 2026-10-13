@@ -1,104 +1,102 @@
 # Mo’Joins
 
-🎉 **Mo’Joins** — плагин для Paper 1.21+, который кастомизирует **вход/выход игроков**: 
-сообщения (MiniMessage), звуки, частицы, фейерверк и настраиваемые **положительные эффекты** при входе.
+🎉 **Mo’Joins** greets players on Paper servers in their own language. It replaces the vanilla join and quit lines with your own MiniMessage text, welcomes newcomers with a personal message, and plays a sound and a ring of particles when someone joins. A firework and potion effects are there if you want them.
 
-## Возможности
+[Русская версия](https://github.com/MairwunNx/mojoins/blob/master/README.RU.md)
 
-- 📨 **Сообщения**:  
-  - общее сообщение о входе (каждый раз);  
-  - персональное многострочное приветствие на **первом входе**;  
-  - сообщение об уходе.
+## What you get
 
-- 🔊 **Звуки**: отдельные настройки для обычного входа и **первого входа**.
+- 🌍 **Every player reads their own language.** The plugin finds the player’s country by IP and picks a language for it: English, Russian, and Spanish come bundled. Everyone in the chat sees the same join line, each in their own language.
+- 📨 **Messages for every moment:** a join line, a personal welcome on the first join, a “say hi” line to everyone else, and a quit line. Placeholders: `<player>`, `<display_name>`, `<online>`.
+- 🔊 **Sounds** for a join and for a first join.
+- ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
+- 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
+- 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
+- ⚙️ **`/mojoins reload`** applies changes without a restart.
 
-- ✨ **Визуалы**:  
-  - "венок" из **частиц** вокруг игрока;  
-  - **фейерверк** (тип, цвета, хвост, мерцание).
+## Try it live
 
-- 🛡️ **Эффекты при входе**: список позитивных эффектов (например, `resistance`) с длительностью и уровнем.
+Mo’Joins runs on Moonlands, my hard survival server with friends. Come in and see it greet you.
 
-- ⚙️ **Горячая перезагрузка** конфигурации: `/mojoins reload`.
+[![Play on Moonlands: pure vanilla, hard mobs, AI, claims. minecraft.mairwunnx.com](https://raw.githubusercontent.com/MairwunNx/mojoins/master/media/og-adv-image.png)](https://minecraft.mairwunnx.com)
 
-## Заплейтестить
+Join at `minecraft.mairwunnx.com`. The site has the live map, player stats, and the hall of fame.
 
-У меня есть возможность дасть заплейтестить плагин, приходите на сервер `minecraft.ximanager.ru`, чтобы ознакомиться с плагинами (Mo'Bosses, Mo'Joins, Mo'Afks и McBuddy), на нем вы
-можете его испытать!
+## Requirements
 
-Будем рады каждому игроку! Сервер с китайской культурой и обычное выживание.
+- Paper 26.3 or a fork of it, like Purpur
+- Java 25
 
-## Совместимость
+## Install
 
-- Server: `Paper 1.21+`
-- Java: `21+`
+1. Download the jar from [Releases](https://github.com/MairwunNx/mojoins/releases).
+2. Put it in your server’s `plugins/` folder and restart the server.
+3. Edit `plugins/MoJoins/config.yml` and the files in `plugins/MoJoins/lang/`.
+4. Run `/mojoins reload`.
 
-## Установка
+## How a player gets their language
 
-1. Скачайте `JAR` из релизов или соберите (см. ниже).
-2. Поместите файл в `plugins/` вашего Paper-сервера.
-3. Запустите сервер (или `/restart`).
-4. Отредактируйте `plugins/MoJoins/config.yml` при необходимости.
-5. Примените изменения командой `/mojoins reload`.
+The plugin tries the sources in `locales.sources`, in order:
 
-## Сборка
+1. **`ip`:** the country of the player’s IP address. `locales.countries` maps languages to country codes: Russia, Belarus, and Kazakhstan get Russian; Spain and Latin America get Spanish.
+2. **`client`:** the language set in the player’s game, when a file in `lang/` matches it.
 
-Требования
+When nothing matches, the player gets `locales.default`. Check what a player got with `/mojoins locale <player>`.
 
-- Java 21
-- Gradle 8+
+The country lookup needs no account and sends no address anywhere. On the first start, the plugin downloads DB-IP’s free country database (4 MB, 8 MB unpacked) into `plugins/MoJoins/geoip/` and refreshes it every 30 days. Players who connect through a proxy or a relay show up with its address, so they get the relay’s country.
+
+### Add a language
+
+1. Copy `lang/en.yml` to, say, `lang/de.yml` and translate it.
+2. Add a line to `locales.countries`: `de: [ DE, AT, CH ]`.
+3. Run `/mojoins reload`.
+
+A key missing from a language file comes from the default language. An empty string turns a message off for that language.
+
+## Commands and permissions
+
+| Command | What it does |
+|---|---|
+| `/mojoins reload` | Reloads `config.yml` and the language files |
+| `/mojoins locale [player]` | Shows a player’s language, country, and game language |
+
+Both need `mojoins.admin`, which operators have by default.
+
+## Build
+
+You need JDK 25; Gradle downloads it when it’s missing.
 
 ```shell
-git clone https://github.com/mairwunnx/mojoins
+git clone https://github.com/MairwunNx/mojoins
 cd mojoins
 ./gradlew build
 ```
 
-Готовый JAR: `build/libs/mojoins-1.1.0-all.jar`
+The jar lands in `build/libs/`. Releases come from the “Release” workflow on GitHub, which takes the version as input.
 
-## Стек
+## Stack
 
-- `Kotlin + Gradle Kotlin DSL`
-- `Paper API` (1.21+)
-- `Adventure (MiniMessage)` — компоненты и форматирование
-- `kotlinx-serialization` — типобезопасная конфигурация
-- `Registry API` — современные сериализаторы Sound/Particle
+- Kotlin and Gradle Kotlin DSL
+- Paper API 26.3 and Adventure MiniMessage
+- kotlinx-serialization with kaml for the config
+- MaxMind DB reader for the country database
 
-## Участие AI
+## AI involvement
 
-AI использовался для генерации части документации, и для некоторых технических аспектов проетка (сериализаторы, EffectsManager), а так же для названий коммитов их полностью
-генерировала AI базируясь на изменениях.
+AI wrote parts of the documentation and some of the code: the serializers and the effects at first, then the 2.0 rewrite with languages by IP. AI also writes the commit messages from the changes.
 
-## Ссылки на связанные проекты
+## Related projects
 
-[McBuddy Server](https://github.com/mcbuddy-ai/mcbuddy-server) — 🛠️⚡ Бэкенд для AI-ассистента MCBuddy с интеграцией OpenRouter и обработкой запросов
+[MCBuddy Server](https://github.com/mcbuddy-ai/mcbuddy-server)—🛠️⚡ the backend for MCBuddy, an AI assistant for Minecraft, built on OpenRouter.
 
-[McBuddy Telegram](https://github.com/mcbuddy-ai/mcbuddy-bot) — 🤖📱 Telegram-бот для общения с MCBuddy за пределами игры
+[MCBuddy Spigot](https://github.com/mcbuddy-ai/mcbuddy-spigot)—💬 brings MCBuddy into the game: ask the AI anything with `/ask`, right in the chat. 🎮
 
-[McBuddy Spigot](https://github.com/mcbuddy-ai/mcbuddy-spigot) — 💬 Spigot-плагин для интеграции MCBuddy — добавляет команду `/ask` для вопросов к AI-ассистенту прямо в чате
-Minecraft сервера! 🎮
+## From the same author
 
-## Из серии "от того же автора"
+[Mo’Bosses](https://github.com/mairwunnx/mobosses)—🏆 an RPG plugin that turns ordinary mobs into epic bosses, with a deep player progression system. Every fight matters, and every level opens something new. ⚔
 
-[Mo’Bosses](https://github.com/mairwunnx/mobosses) — 🏆 **Mo'Bosses** — это лучший RPG плагин, который превращает обычных мобов в эпических боссов с **продвинутой системой
-прогрессии игрока**. В отличие от других плагинов, здесь каждый бой имеет значение, а каждый уровень открывает новые возможности! ⚔
+## Credits
 
-[Mo’Afks](https://github.com/mairwunnx/moafks) — 🛡️ Пауза в онлайне — теперь возможна. Плагин для PaperMC, который даёт игроку безопасный режим AFK: иммунитет к урону, отсутствие коллизий, игнор мобами, авто-детект неактивности и аккуратные визуальные эффекты. Всё — одной командой /afk.
-
-[Xi Manager](https://github.com/mairwunnx/xi) — 🀄️ Telegram-бот с ИИ, стилизованный под личного помощника Xi. Личный помощник великого лидера, готовый отвечать на вопросы простого
-народа.
-
-[Dickobrazz](https://github.com/mairwunnx/dickobrazz) — 🌶️ Дикобраз бот, он же дикобот, способен в точности до сантиметра выдать размер вашего агрегата, краника или валыны, не
-обижайтесь, если не удалось понтануться большим прибором, это всего лишь шутка.
-
-[Louisepizdon](https://github.com/MairwunNx/louisepizdon) — 🥀 Луипиздон, Telegram-бот с ИИ, который честнее чем твоя бабушка. Оценит тебя по достоинству, разборка ценообразования
-твоих шмоток с фотографии!
-
----
-
-![image](./media.jpg)
-
-🇷🇺 **Сделано в России с любовью.** ❤️
-
-**Mo’Joins** — это про красивое приветствие на PaperMC серверах!
+[IP Geolocation by DB-IP](https://db-ip.com), licensed under CC BY 4.0.
 
 > 🫡 Made by Pavel Erokhin (Павел Ерохин), aka mairwunnx.
