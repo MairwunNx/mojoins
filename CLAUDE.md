@@ -40,7 +40,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 ## Releasing and Moonlands
 
 1. Add a `## X.Y.Z` section to CHANGELOG.md, written for server owners, and push it.
-2. Run the “Release” workflow with the new version: `gh workflow run release.yml -R MairwunNx/mojoins -f version=X.Y.Z -f modrinth=true`. Its `changelog` field overrides the CHANGELOG.md section; one of the two must be there. It builds with `-PreleaseVersion`, tags `vX.Y.Z`, and attaches `mojoins-X.Y.Z.jar` to a GitHub release. Nothing in the repo holds the version; local and CI builds are `dev`.
+2. Run the “Release” workflow with the new version: `gh workflow run release.yml -R MairwunNx/mojoins -f version=X.Y.Z -f modrinth=true -f hangar=true`. Its `changelog` field overrides the CHANGELOG.md section; one of the two must be there. It builds with `-PreleaseVersion`, tags `vX.Y.Z`, and attaches `mojoins-X.Y.Z.jar` to a GitHub release. Nothing in the repo holds the version; local and CI builds are `dev`.
 3. To put it on Moonlands, point the Mo’Joins line in `minecraft/extras/jars.txt` (MairwunNx/minecraft) at the release jar, push, and deploy as its CLAUDE.md says. The server restarts only with the owner's go-ahead.
 
 ## Modrinth
@@ -50,3 +50,7 @@ The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a 
 ## Commits
 
 Short one-line imperative English messages, one logical change per commit: “Pick each player's language by IP”.
+
+## Hangar
+
+The project is `MairwunNx/MoJoins` on hangar.papermc.io, MIT, created 2026-10-13. The “Release” workflow has a `hangar` switch, off by default: on, it runs `./gradlew publishPluginPublicationToHangar`, which uploads the jar to the Release channel for Paper 26.3. The project page came from MODRINTH.md when it was created; Hangar doesn't sync it, so edit the page on the site after a big change. It uses the `HANGAR_TOKEN` secret; locally the same key is in `~/.secrets/cloud.env`. That key can upload versions but can't change project settings or the icon. Never put it in the repo.
