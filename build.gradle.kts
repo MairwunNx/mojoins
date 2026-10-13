@@ -67,7 +67,7 @@ modrinth {
   gameVersions.addAll("26.3")
   loaders.addAll("paper", "purpur")
   changelog = "https://github.com/MairwunNx/mojoins/releases/tag/v${project.version}"
-  syncBodyFrom = file("README.md").readText()
+  syncBodyFrom = file("MODRINTH.md").readText()
 }
 
 tasks.modrinth {

@@ -6,7 +6,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 
 - Reply in Russian, address the owner as «вы». Quotes «ёлочки», nested „лапки“, an em dash with spaces « — ».
 - Code, comments, commit messages, README.md, and the English language file are in English: curly quotes, an em dash without spaces or an en dash with spaces, never a hyphen as a dash.
-- README.RU.md and `lang/ru.yml` follow Russian typography. Change both READMEs together.
+- README.RU.md and `lang/ru.yml` follow Russian typography. Change both READMEs and MODRINTH.md together.
 
 ## How it fits together
 
@@ -41,7 +41,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 
 ## Modrinth
 
-The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs README.md as the description. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
+The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs MODRINTH.md as the description. MODRINTH.md is for server owners: no build, stack, or related projects, and no Moonlands banner. A change to what the plugin does goes in README.md, README.RU.md, and MODRINTH.md. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
 
 ## Commits
 
