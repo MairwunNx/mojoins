@@ -94,9 +94,9 @@ cd mojoins
 
 ## Связанные проекты
 
-[MCBuddy Server](https://github.com/mcbuddy-ai/mcbuddy-server) — 🛠️⚡ бэкенд MCBuddy, ИИ-помощника для Minecraft, на OpenRouter.
+[Allay Server](https://github.com/allay-ai/server) — 🛠️⚡ бэкенд Allay, ИИ-помощника для Minecraft, на OpenRouter.
 
-[MCBuddy Spigot](https://github.com/mcbuddy-ai/mcbuddy-spigot) — 💬 приводит MCBuddy в игру: спрашивайте ИИ о чём угодно командой `/ask` прямо в чате. 🎮
+[Allay](https://github.com/allay-ai/minecraft) — 🪽 приводит Allay в игру: спрашивайте ИИ о чём угодно командой `/ask` прямо в чате. 🎮
 
 ## От того же автора
 
