@@ -12,6 +12,7 @@
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
 - 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
 - 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
+- 📊 **Plan**, if you have it: each player’s language and silent mode on their page, and a pie of languages on the server’s.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
 ## Install

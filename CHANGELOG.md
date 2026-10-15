@@ -2,6 +2,10 @@
 
 The “Release” workflow takes the notes for a version from its section here, unless you type them into its `changelog` field. The same notes go to GitHub and Modrinth.
 
+## 2.2.0
+
+- 📊 **Plan.** With Plan installed, a player’s page shows the language their messages come in, the country that picked it, and whether they join silently, and the players table gets a language column. The server page shows a pie of languages and the silent players online. Plan is optional, and the IP address never reaches it.
+
 ## 2.1.0
 
 - 🤫 **Silent joins.** `/mojoins silent` hides your joins and quits: no chat lines, sounds, or particles, only a note to you. It needs `mojoins.silent`, which operators have, and stays on across restarts.

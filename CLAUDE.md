@@ -20,6 +20,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 | `JoinEffects.kt` | Sounds, the particle ring, the firework, potion effects; game ids resolve against registries on load |
 | `MoJoinsCommand.kt` | `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
 | `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
+| `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, and `/mojoins silent` |
 | `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
 
 ## Rules that keep it working
@@ -42,7 +43,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 1. `./gradlew build`: the tests and the jar.
 2. A real Paper with the jar, started and stopped by the script, which fails on any error about the plugin:
    ```sh
-   python3 -I .claude/scripts/paper_smoke.py --game 26.3 --plugin build/libs/mojoins-dev.jar --modrinth placeholderapi --expect "PlaceholderAPI found"
+   python3 -I .claude/scripts/paper_smoke.py --game 26.3 --plugin build/libs/mojoins-dev.jar --modrinth placeholderapi --modrinth plan --expect "PlaceholderAPI found" --expect "Plan found" --ignore "Plan\] Failed to enable geolocation"
    ```
    Pass `--game` the version the project targets, and `--build` to pin a Paper build. The script downloads Paper and Modrinth plugins into `~/.cache/paper-smoke` and keeps the server folder when something fails.
 3. Join, first-join, and quit lines need a game client: after a release reaches Moonlands, the owner joins and leaves once. `/mojoins` in the console shows the language picked for a player.
@@ -53,6 +54,7 @@ Where the versions live, for `/update-deps` and `/update-minecraft` (both in `.c
 
 - The game: `io.papermc.paper:paper-api` (twice: `compileOnly` and `testImplementation`), `gameVersions` (Modrinth) and `platformVersions` (Hangar) in `build.gradle.kts`, and `api-version` in `src/main/resources/paper-plugin.yml`.
 - PlaceholderAPI: `compileOnly("me.clip:placeholderapi:…")`, from `repo.extendedclip.com`.
+- Plan: `compileOnly("com.djrapitops:plan-api:…")`, from `repo.playeranalytics.net`. The API can run ahead of the Plan servers run: `PlanData` checks capabilities, and graphs and statistics (API 5.9) stay unused until a released Plan has them.
 - Java: `jvmToolchain` in `build.gradle.kts`, the foojay resolver in `settings.gradle.kts`, and CI's `setup-java`.
 - Gradle in `gradle/wrapper/gradle-wrapper.properties`; Kotlin and the Gradle plugins in the `plugins` block; libraries in `dependencies`.
 

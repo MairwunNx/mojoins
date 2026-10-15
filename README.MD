@@ -14,6 +14,7 @@
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
 - 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
 - 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
+- 📊 **Plan**, if you have it: each player’s language and silent mode on their page, and a pie of languages on the server’s.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
 ## Try it live
@@ -68,6 +69,10 @@ The first two need `mojoins.admin`, the last `mojoins.silent`; operators have bo
 ## PlaceholderAPI
 
 With [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi) installed, write `<papi:name>` in any message to show `%name%` for the player who joined or left: `<papi:luckperms_prefix><player>`. Mo’Joins doesn’t look for `%…%` in your text, so a percent sign stays a percent sign. Without PlaceholderAPI the tags show nothing.
+
+## Plan
+
+With [Plan](https://modrinth.com/plugin/plan) installed, Mo’Joins adds its section to Plan’s pages. A player’s “Plugins” tab shows the language their messages come in, the country that picked it, and whether they join silently; the language is also a column in the players table. The server’s “Plugins Overview” shows a pie of languages and how many silent players are online. Plan stores the values when a player joins and keeps the last ones while they’re away. The IP address never reaches Plan.
 
 ## Build
 

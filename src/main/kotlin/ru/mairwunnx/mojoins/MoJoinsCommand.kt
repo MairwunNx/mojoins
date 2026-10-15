@@ -30,6 +30,8 @@ class MoJoinsCommand(private val plugin: MoJoinsPlugin) : BasicCommand {
       "silent" -> {
         val player = sender as? Player ?: return reply(sender, Message.PLAYERS_ONLY)
         reply(sender, if (plugin.silent.toggle(player)) Message.SILENT_ON else Message.SILENT_OFF)
+        plugin.listener.remember(player)
+        if (PlanData.available) PlanData.update(player)
       }
       "reload" -> {
         val ok = plugin.reload()

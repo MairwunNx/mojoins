@@ -11,8 +11,10 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerLocaleChangeEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.persistence.PersistentDataType
+import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -23,6 +25,10 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
   private val countries = ConcurrentHashMap<UUID, String>()
+  /** What Plan shows about each player online. Written on the server thread, read from Plan's. */
+  private val seen = ConcurrentHashMap<UUID, Seen>()
+
+  data class Seen(val language: String, val country: String?, val silent: Boolean)
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   fun onPreLogin(event: AsyncPlayerPreLoginEvent) {
@@ -32,11 +38,12 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onJoin(event: PlayerJoinEvent) {
-    if (!plugin.settings.enabled) return
     val player = event.player
+    if (!plugin.settings.enabled) return remember(player)
     val firstJoin = !player.hasPlayedBefore()
     val broadcast = plugin.settings.broadcast
     event.joinMessage(null)
+    remember(player)
 
     if (plugin.silent.isOn(player)) {
       send(player, Message.SILENT_JOIN, player)
@@ -66,6 +73,14 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
       if (plugin.settings.broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} left the game")
     }
     countries.remove(player.uniqueId)
+    seen.remove(player.uniqueId)
+  }
+
+  /** The game sends its language a moment after the join; with no country to go by, that changes the pick. */
+  @EventHandler(priority = EventPriority.MONITOR)
+  fun onLocaleChange(event: PlayerLocaleChangeEvent) {
+    remember(event.player, event.locale())
+    if (PlanData.available) PlanData.update(event.player)
   }
 
   /** Join rockets are for show: their blast hurts nobody unless the config says so. */
@@ -79,7 +94,16 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
 
   fun country(player: Player): String? = countries[player.uniqueId]
 
-  fun languageOf(player: Player): String = plugin.resolver.resolve(countries[player.uniqueId], player.locale())
+  fun languageOf(player: Player, locale: Locale = player.locale()): String = plugin.resolver.resolve(countries[player.uniqueId], locale)
+
+  fun seen(player: UUID): Seen? = seen[player]
+
+  fun silentOnline(): Int = seen.values.count { it.silent }
+
+  /** Keeps what Plan reads about an online player; call on the server thread whenever it may have changed. */
+  fun remember(player: Player, locale: Locale = player.locale()) {
+    seen[player.uniqueId] = Seen(languageOf(player, locale), countries[player.uniqueId], plugin.silent.isOn(player))
+  }
 
   /** Sends a message to everyone online, each in their language. The console gets it too, unless it gets the vanilla line instead. */
   private fun announce(message: Message, subject: Player, except: Player? = null) {

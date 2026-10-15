@@ -26,6 +26,9 @@ class MoJoinsPlugin : JavaPlugin() {
     registerCommand("mojoins", "Reload Mo’Joins, check a player’s language, or join silently", MoJoinsCommand(this))
     log.info("Mo’Joins ${pluginMeta.version} is on: ${languages.codes.sorted().joinToString()}, default ${resolver.default}")
     if (Placeholders.available) log.info("PlaceholderAPI found: <papi:…> tags work in messages")
+    // Players online during a reload have no join to fill in what Plan reads.
+    server.onlinePlayers.forEach(listener::remember)
+    if (PlanData.available) PlanData.register(this)
   }
 
   override fun onDisable() {
