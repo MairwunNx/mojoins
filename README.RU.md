@@ -15,6 +15,7 @@
 - 🤫 **Тихий вход для админов:** `/mojoins silent` прячет ваши входы и выходы от остальных.
 - 👻 **Понимает ванишь:** игрок, которого спрятал SuperVanish, PremiumVanish, Essentials или любой плагин с меткой `vanished`, заходит и выходит без строк, звуков и частиц, а `<online>` его не считает.
 - 🧩 **PlaceholderAPI**, если он стоит: `<papi:player_health>` в сообщении показывает `%player_health%`.
+- 🧩 **MiniPlaceholders**, если он стоит: его теги работают в сообщениях, а `<mojoins_language>`, `<mojoins_country>` и `<mojoins_silent>` — в TAB и других плагинах.
 - 📊 **Plan**, если он стоит: язык и тихий режим каждого игрока на его странице, а на странице сервера — диаграмма языков.
 - ⚙️ **`/mojoins reload`** применяет изменения без перезапуска.
 
@@ -70,6 +71,16 @@ Mo’Joins работает на Moonlands — моём сервере со сл
 ## PlaceholderAPI
 
 Если стоит [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi), пишите в любом сообщении `<papi:name>`, и там появится `%name%` для игрока, который зашёл или вышел: `<papi:luckperms_prefix><player>`. Mo’Joins не ищет `%…%` в ваших текстах, так что знак процента остаётся знаком процента. Без PlaceholderAPI такие теги ничего не выводят.
+
+## MiniPlaceholders
+
+Если стоит [MiniPlaceholders](https://modrinth.com/plugin/miniplaceholders), строки входа и выхода понимают его теги как есть, для игрока, который зашёл или вышел: `<luckperms_prefix><player>`. А Mo’Joins добавляет три тега для других плагинов, каждый про игрока, которому его показывают:
+
+| Тег | Что показывает |
+|---|---|
+| `<mojoins_language>` | На каком языке он читает сообщения, например `ru` |
+| `<mojoins_country>` | Страну его IP-адреса или ничего |
+| `<mojoins_silent>` | `true`, пока его входы не объявляются |
 
 ## Plan
 

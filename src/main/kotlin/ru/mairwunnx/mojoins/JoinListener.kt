@@ -132,11 +132,11 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
   private fun announce(message: Message, subject: Player, except: Player? = null) {
     Bukkit.getOnlinePlayers().forEach { if (it != except) send(it, message, subject) }
     if (plugin.settings.broadcast.vanillaLog) return
-    plugin.languages.render(plugin.resolver.default, message, *placeholders(subject))?.let { Bukkit.getConsoleSender().sendMessage(it) }
+    plugin.languages.render(plugin.resolver.default, message, *placeholders(subject), target = subject)?.let { Bukkit.getConsoleSender().sendMessage(it) }
   }
 
   private fun send(to: Player, message: Message, subject: Player) {
-    plugin.languages.render(languageOf(to), message, *placeholders(subject))?.let(to::sendMessage)
+    plugin.languages.render(languageOf(to), message, *placeholders(subject), target = subject)?.let(to::sendMessage)
   }
 
   private fun placeholders(subject: Player): Array<TagResolver> = arrayOf(
@@ -145,5 +145,6 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
     // Vanished players stay out of the count, or it would give them away.
     Placeholder.unparsed("online", Bukkit.getOnlinePlayers().count { !Vanish.isOn(it) }.toString()),
     Placeholders.resolver(subject),
+    MiniPlaceholderTags.resolver(),
   )
 }

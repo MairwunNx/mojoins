@@ -18,6 +18,7 @@ class MoJoinsPlugin : JavaPlugin() {
 
   private val fireworkKey by lazy { NamespacedKey(this, "join_firework") }
   private var geoIpTask: BukkitTask? = null
+  private var miniPlaceholders: AutoCloseable? = null
 
   override fun onEnable() {
     if (!reload()) log.warn("Started with the default settings; fix config.yml and run /mojoins reload")
@@ -29,9 +30,14 @@ class MoJoinsPlugin : JavaPlugin() {
     // Players online during a reload have no join to fill in what Plan reads.
     server.onlinePlayers.forEach(listener::remember)
     if (PlanData.available) PlanData.register(this)
+    if (MiniPlaceholderTags.available) {
+      miniPlaceholders = MiniPlaceholderTags.register(this)
+      log.info("MiniPlaceholders found: its tags work in messages, <mojoins_…> works elsewhere")
+    }
   }
 
   override fun onDisable() {
+    miniPlaceholders?.close()
     geoIpTask?.cancel()
     geoIp.close()
   }

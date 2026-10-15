@@ -15,6 +15,7 @@
 - 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
 - 👻 **Vanish-aware:** a player hidden by SuperVanish, PremiumVanish, Essentials, or any plugin that marks them `vanished` joins and leaves without a line, sound, or particle, and `<online>` doesn’t count them.
 - 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
+- 🧩 **MiniPlaceholders**, if you have it: its tags work in messages, and `<mojoins_language>`, `<mojoins_country>`, `<mojoins_silent>` work in TAB and elsewhere.
 - 📊 **Plan**, if you have it: each player’s language and silent mode on their page, and a pie of languages on the server’s.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
@@ -70,6 +71,16 @@ The first two need `mojoins.admin`, the last `mojoins.silent`; operators have bo
 ## PlaceholderAPI
 
 With [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi) installed, write `<papi:name>` in any message to show `%name%` for the player who joined or left: `<papi:luckperms_prefix><player>`. Mo’Joins doesn’t look for `%…%` in your text, so a percent sign stays a percent sign. Without PlaceholderAPI the tags show nothing.
+
+## MiniPlaceholders
+
+With [MiniPlaceholders](https://modrinth.com/plugin/miniplaceholders) installed, join and quit lines take its tags as they are, for the player who joined or left: `<luckperms_prefix><player>`. Mo’Joins also adds three tags for other plugins, each about the player they’re shown for:
+
+| Tag | What it shows |
+|---|---|
+| `<mojoins_language>` | The language their messages come in, like `ru` |
+| `<mojoins_country>` | The country of their IP address, or nothing |
+| `<mojoins_silent>` | `true` while their joins go unannounced |
 
 ## Plan
 

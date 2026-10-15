@@ -21,6 +21,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 | `MoJoinsCommand.kt` | `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
 | `Vanish.kt` | Reads the `vanished` metadata vanish plugins set; a vanished player gets no lines or effects, and `<online>` skips them |
 | `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
+| `MiniPlaceholderTags.kt` | MiniPlaceholders, optional: messages render with the player they're about as their target, so its global and audience tags resolve for that player; `<mojoins_language>`, `<mojoins_country>`, `<mojoins_silent>` read `JoinListener.seen` |
 | `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, and `/mojoins silent` |
 | `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
 
@@ -30,6 +31,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 - A new message gets a `Message` entry and a line in every bundled language (`src/main/resources/lang/`); `ResourcesTest` fails otherwise. Moonlands keeps its own copies in `minecraft/config/plugins/MoJoins/lang/`, so add the line there too.
 - A new config key gets a default in `Settings` and the same default in `src/main/resources/config.yml`; `ResourcesTest` checks they match.
 - Render messages with `Placeholder.unparsed` for player-provided text, so a name can't inject tags.
+- MiniPlaceholders' tags reach a message through `MiniPlaceholderTags.resolver()` and `render(…, target = subject)`; player names stay `Placeholder.unparsed`. Its tags may be asked from any thread: read only `JoinListener.seen` there.
 - PlaceholderAPI goes through the `<papi:…>` tag only. Never run `%…%` replacement over whole texts: it would rewrite any percent sign in them, and its output carries legacy color codes that MiniMessage can't parse.
 - Join lines and effects go out at MONITOR (`onJoined`), after vanish plugins mark the player (SuperVanish at HIGH, Essentials at HIGHEST); `onJoin` at HIGHEST only clears the vanilla line. On quit, `onQuitting` reads the mark at LOWEST, before Essentials clears it at HIGHEST. Keep both orders.
 - The GeoIP download and the country lookup run off the server thread (async scheduler, `AsyncPlayerPreLoginEvent`).
@@ -45,7 +47,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 1. `./gradlew build`: the tests and the jar.
 2. A real Paper with the jar, started and stopped by the script, which fails on any error about the plugin:
    ```sh
-   python3 -I .claude/scripts/paper_smoke.py --game 26.3 --plugin build/libs/mojoins-dev.jar --modrinth placeholderapi --modrinth plan --expect "PlaceholderAPI found" --expect "Plan found" --ignore "Plan\] Failed to enable geolocation"
+   python3 -I .claude/scripts/paper_smoke.py --game 26.3 --plugin build/libs/mojoins-dev.jar --modrinth placeholderapi --modrinth plan --jar https://cdn.modrinth.com/data/HQyibRsN/versions/N2WfJ0ll/MiniPlaceholders-Paper-3.2.0.jar --command "miniplaceholders expansions" --expect "PlaceholderAPI found" --expect "Plan found" --expect "MiniPlaceholders found" --ignore "Plan\] Failed to enable geolocation"
    ```
    Pass `--game` the version the project targets, and `--build` to pin a Paper build. The script downloads Paper and Modrinth plugins into `~/.cache/paper-smoke` and keeps the server folder when something fails.
 3. Join, first-join, and quit lines need a game client: after a release reaches Moonlands, the owner joins and leaves once. `/mojoins` in the console shows the language picked for a player.
@@ -56,6 +58,7 @@ Where the versions live, for `/update-deps` and `/update-minecraft` (both in `.c
 
 - The game: `io.papermc.paper:paper-api` (twice: `compileOnly` and `testImplementation`), `gameVersions` (Modrinth) and `platformVersions` (Hangar) in `build.gradle.kts`, and `api-version` in `src/main/resources/paper-plugin.yml`.
 - PlaceholderAPI: `compileOnly("me.clip:placeholderapi:…")`, from `repo.extendedclip.com`.
+- MiniPlaceholders: `compileOnly("io.github.miniplaceholders:miniplaceholders-api:…")` from Maven Central. Its Paper jar on Modrinth lagged a game version behind (3.2.0 lists up to 26.2 and runs on 26.3), so the check passes the jar's URL with `--jar` instead of `--modrinth`.
 - Plan: `compileOnly("com.djrapitops:plan-api:…")`, from `repo.playeranalytics.net`. The API can run ahead of the Plan servers run: `PlanData` checks capabilities, and graphs and statistics (API 5.9) stay unused until a released Plan has them.
 - Java: `jvmToolchain` in `build.gradle.kts`, the foojay resolver in `settings.gradle.kts`, and CI's `setup-java`.
 - Gradle in `gradle/wrapper/gradle-wrapper.properties`; Kotlin and the Gradle plugins in the `plugins` block; libraries in `dependencies`.
