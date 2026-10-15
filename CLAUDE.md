@@ -35,11 +35,30 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 ## Building and testing
 
 - `./gradlew build` runs the tests and builds `build/libs/mojoins-<version>.jar`, shaded and relocated under `ru.mairwunnx.mojoins.libs`. JDK 25; Gradle provisions it through the foojay resolver.
-- There is no MockBukkit for Paper 26.3; tests cover the pure parts. For the rest, run a real Paper: download the jar from `https://fill.papermc.io/v3/projects/paper/versions/26.3/builds/latest`, put the plugin in `plugins/`, set `online-mode=false`, and drive the console from a script in the scratchpad.
+- There is no MockBukkit for Paper 26.3; tests cover the pure parts. The rest runs on a real Paper; see “Checking a change”.
+
+## Checking a change
+
+1. `./gradlew build`: the tests and the jar.
+2. A real Paper with the jar, started and stopped by the script, which fails on any error about the plugin:
+   ```sh
+   python3 -I .claude/scripts/paper_smoke.py --game 26.3 --plugin build/libs/mojoins-dev.jar --modrinth placeholderapi --expect "PlaceholderAPI found"
+   ```
+   Pass `--game` the version the project targets, and `--build` to pin a Paper build. The script downloads Paper and Modrinth plugins into `~/.cache/paper-smoke` and keeps the server folder when something fails.
+3. Join, first-join, and quit lines need a game client: after a release reaches Moonlands, the owner joins and leaves once. `/mojoins` in the console shows the language picked for a player.
+
+## Versions
+
+Where the versions live, for `/update-deps` and `/update-minecraft` (both in `.claude/skills/`, the same files in every project of the family):
+
+- The game: `io.papermc.paper:paper-api` (twice: `compileOnly` and `testImplementation`), `gameVersions` (Modrinth) and `platformVersions` (Hangar) in `build.gradle.kts`, and `api-version` in `src/main/resources/paper-plugin.yml`.
+- PlaceholderAPI: `compileOnly("me.clip:placeholderapi:…")`, from `repo.extendedclip.com`.
+- Java: `jvmToolchain` in `build.gradle.kts`, the foojay resolver in `settings.gradle.kts`, and CI's `setup-java`.
+- Gradle in `gradle/wrapper/gradle-wrapper.properties`; Kotlin and the Gradle plugins in the `plugins` block; libraries in `dependencies`.
 
 ## Releasing and Moonlands
 
-1. Add a `## X.Y.Z` section to CHANGELOG.md, written for server owners, and push it.
+1. Add a `## X.Y.Z` section to CHANGELOG.md, written for server owners, and push it. After a change that reaches what the project ships, add it to CHANGELOG.md in the same push: under the topmost “## X.Y.Z” section while that version isn't released (`gh release view vX.Y.Z` fails), or under a new section with the next version: patch for fixes, minor for features, major for breaking changes. A release then needs only the workflow, and the workflow runs only when the owner asks.
 2. Run the “Release” workflow with the new version: `gh workflow run release.yml -R MairwunNx/mojoins -f version=X.Y.Z -f modrinth=true -f hangar=true`. Its `changelog` field overrides the CHANGELOG.md section; one of the two must be there. It builds with `-PreleaseVersion`, tags `vX.Y.Z`, and attaches `mojoins-X.Y.Z.jar` to a GitHub release. Nothing in the repo holds the version; local and CI builds are `dev`.
 3. To put it on Moonlands, point the Mo’Joins line in `minecraft/extras/jars.txt` (MairwunNx/minecraft) at the release jar, push, and deploy as its CLAUDE.md says, which also says when a restart may happen without asking.
 
