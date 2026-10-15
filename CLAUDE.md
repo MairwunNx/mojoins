@@ -19,6 +19,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 | `JoinListener.kt` | Country lookup at login, then the join, first join, and quit messages, rendered per recipient |
 | `JoinEffects.kt` | Sounds, the particle ring, the firework, potion effects; game ids resolve against registries on load |
 | `MoJoinsCommand.kt` | `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
+| `Vanish.kt` | Reads the `vanished` metadata vanish plugins set; a vanished player gets no lines or effects, and `<online>` skips them |
 | `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
 | `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, and `/mojoins silent` |
 | `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
@@ -30,6 +31,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 - A new config key gets a default in `Settings` and the same default in `src/main/resources/config.yml`; `ResourcesTest` checks they match.
 - Render messages with `Placeholder.unparsed` for player-provided text, so a name can't inject tags.
 - PlaceholderAPI goes through the `<papi:…>` tag only. Never run `%…%` replacement over whole texts: it would rewrite any percent sign in them, and its output carries legacy color codes that MiniMessage can't parse.
+- Join lines and effects go out at MONITOR (`onJoined`), after vanish plugins mark the player (SuperVanish at HIGH, Essentials at HIGHEST); `onJoin` at HIGHEST only clears the vanilla line. On quit, `onQuitting` reads the mark at LOWEST, before Essentials clears it at HIGHEST. Keep both orders.
 - The GeoIP download and the country lookup run off the server thread (async scheduler, `AsyncPlayerPreLoginEvent`).
 - With `vanilla_log` on, the plugin writes “<name> joined the game” to the server log. Moonlands' site-api reads those lines; don't drop them.
 

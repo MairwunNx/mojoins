@@ -4,6 +4,7 @@ The “Release” workflow takes the notes for a version from its section here, 
 
 ## 2.2.0
 
+- 👻 **Vanish.** A player hidden by SuperVanish, PremiumVanish, Essentials, or any plugin that marks them `vanished` joins and leaves without a line, sound, or particle, as with silent joins but on its own. `<online>` doesn’t count vanished players.
 - 📊 **Plan.** With Plan installed, a player’s page shows the language their messages come in, the country that picked it, and whether they join silently, and the players table gets a language column. The server page shows a pie of languages and the silent players online. Plan is optional, and the IP address never reaches it.
 
 ## 2.1.0

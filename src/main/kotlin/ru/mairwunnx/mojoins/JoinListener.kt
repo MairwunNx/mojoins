@@ -27,6 +27,8 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
   private val countries = ConcurrentHashMap<UUID, String>()
   /** What Plan shows about each player online. Written on the server thread, read from Plan's. */
   private val seen = ConcurrentHashMap<UUID, Seen>()
+  /** Players whose quit began while vanished; the server thread only. */
+  private val leavingVanished = HashSet<UUID>()
 
   data class Seen(val language: String, val country: String?, val silent: Boolean)
 
@@ -38,17 +40,31 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onJoin(event: PlayerJoinEvent) {
+    remember(event.player)
+    if (plugin.settings.enabled) event.joinMessage(null)
+  }
+
+  /**
+   * The lines, sounds, and particles go out last, at MONITOR: vanish plugins mark a player during the
+   * join (SuperVanish at HIGH, Essentials at HIGHEST), and only now has each of them had its turn. This
+   * handler doesn't touch the event; it only sends.
+   */
+  @EventHandler(priority = EventPriority.MONITOR)
+  fun onJoined(event: PlayerJoinEvent) {
+    if (!plugin.settings.enabled) return
     val player = event.player
-    if (!plugin.settings.enabled) return remember(player)
     val firstJoin = !player.hasPlayedBefore()
     val broadcast = plugin.settings.broadcast
-    event.joinMessage(null)
-    remember(player)
 
     if (plugin.silent.isOn(player)) {
       send(player, Message.SILENT_JOIN, player)
       if (broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} joined the game")
       plugin.log.debug { "${player.name} joined silently" }
+      return
+    }
+    if (Vanish.isOn(player)) {
+      if (broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} joined the game")
+      plugin.log.debug { "${player.name} joined vanished" }
       return
     }
 
@@ -64,12 +80,19 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
     plugin.effects.play(player, firstJoin)
   }
 
+  /** Essentials drops its vanish mark during the quit, at HIGHEST; read the mark before anyone else runs. */
+  @EventHandler(priority = EventPriority.LOWEST)
+  fun onQuitting(event: PlayerQuitEvent) {
+    if (Vanish.isOn(event.player)) leavingVanished += event.player.uniqueId
+  }
+
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onQuit(event: PlayerQuitEvent) {
     val player = event.player
+    val vanished = leavingVanished.remove(player.uniqueId) || Vanish.isOn(player)
     if (plugin.settings.enabled) {
       event.quitMessage(null)
-      if (plugin.settings.broadcast.quit && !plugin.silent.isOn(player)) announce(Message.QUIT, player, except = player)
+      if (plugin.settings.broadcast.quit && !plugin.silent.isOn(player) && !vanished) announce(Message.QUIT, player, except = player)
       if (plugin.settings.broadcast.vanillaLog) Bukkit.getServer().logger.info("${player.name} left the game")
     }
     countries.remove(player.uniqueId)
@@ -119,7 +142,8 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
   private fun placeholders(subject: Player): Array<TagResolver> = arrayOf(
     Placeholder.unparsed("player", subject.name),
     Placeholder.component("display_name", subject.displayName()),
-    Placeholder.unparsed("online", Bukkit.getOnlinePlayers().size.toString()),
+    // Vanished players stay out of the count, or it would give them away.
+    Placeholder.unparsed("online", Bukkit.getOnlinePlayers().count { !Vanish.isOn(it) }.toString()),
     Placeholders.resolver(subject),
   )
 }
