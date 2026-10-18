@@ -10,6 +10,7 @@
 - ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
 - 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
+- 🗣️ **Players choose their own language:** `/mojoins language` lists the languages, `/mojoins language ru` picks one, `/mojoins language auto` hands the choice back to the plugin.
 - 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
 - 👻 **Vanish-aware:** a player hidden by SuperVanish, PremiumVanish, Essentials, or any plugin that marks them `vanished` joins and leaves without a line, sound, or particle, and `<online>` doesn’t count them.
 - 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
@@ -31,6 +32,8 @@ Mo’Joins needs Paper 26.3 or a fork of it, like Purpur, on Java 25.
 2. **By game language.** When the country isn’t listed, the plugin takes the language set in the player’s game, if a file in `lang/` matches it.
 3. **Default.** Everyone else gets `locales.default`, English out of the box.
 
+A player who chose a language with `/mojoins language` gets it before any of these rules.
+
 The country lookup needs no account and sends no address anywhere. On the first start, the plugin downloads a free country database (4 MB) and refreshes it every month. Players who connect through a proxy show up with the proxy’s address, so they get the proxy’s country.
 
 **Add a language:** copy `lang/en.yml` to, say, `lang/it.yml`, translate it, add `it: [ IT, SM, VA ]` to `locales.countries`, and run `/mojoins reload`.
@@ -43,11 +46,12 @@ The country lookup needs no account and sends no address anywhere. On the first 
 
 | Command | What it does |
 |---|---|
+| `/mojoins language [code\|auto]` | Lists the languages, sets yours, or with `auto` lets the plugin pick again |
 | `/mojoins reload` | Reloads the config and the messages |
 | `/mojoins locale [player]` | Shows a player’s language, country, and game language |
 | `/mojoins silent` | Turns silent mode on or off for you |
 
-The first two need `mojoins.admin`, the last `mojoins.silent`; operators have both by default. Silent mode stays on across restarts. It hides the chat lines, sounds, and particles; you still show up in the player list.
+Every player can use `/mojoins language`; the choice stays across restarts. `reload` and `locale` need `mojoins.admin`, `silent` needs `mojoins.silent`; operators have both by default. Silent mode stays on across restarts. It hides the chat lines, sounds, and particles; you still show up in the player list.
 
 ## Links
 

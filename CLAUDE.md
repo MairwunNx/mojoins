@@ -14,15 +14,16 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 |---|---|
 | `MoJoinsPlugin.kt` | Startup and `reload()`: reads `config.yml` and `lang/`, builds the resolver and the effects, schedules GeoIP refreshes |
 | `Settings.kt` | `config.yml` through kaml, not strict: every field has a default, so old and partial configs load |
-| `Languages.kt` | `Message` keys, the language texts, and `LocaleResolver`, which picks a language from country and game language |
+| `Languages.kt` | `Message` keys, the language texts, their native names, and `LocaleResolver`, which picks a language: the player's choice first, then country and game language |
+| `LanguageChoice.kt` | The language a player chose with `/mojoins language`, kept in their persistent data; a choice whose file is gone counts as none |
 | `GeoIp.kt` | Downloads the DB-IP country database into `geoip/` and looks up countries; lookups never touch the network |
 | `JoinListener.kt` | Country lookup at login, then the join, first join, and quit messages, rendered per recipient |
 | `JoinEffects.kt` | Sounds, the particle ring, the firework, potion effects; game ids resolve against registries on load |
-| `MoJoinsCommand.kt` | `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
+| `MoJoinsCommand.kt` | `/mojoins language [code\|auto]` for every player (no argument lists the languages, each clickable), `/mojoins reload`, `/mojoins locale [player]`, and `/mojoins silent` |
 | `Vanish.kt` | Reads the `vanished` metadata vanish plugins set; a vanished player gets no lines or effects, and `<online>` skips them |
 | `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
 | `MiniPlaceholderTags.kt` | MiniPlaceholders, optional: messages render with the player they're about as their target, so its global and audience tags resolve for that player; `<mojoins_language>`, `<mojoins_country>`, `<mojoins_silent>` read `JoinListener.seen` |
-| `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, and `/mojoins silent` |
+| `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, `/mojoins language`, and `/mojoins silent` |
 | `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
 
 ## Rules that keep it working

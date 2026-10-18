@@ -32,4 +32,12 @@ class LocaleResolverTest {
   @Test fun `a missing default language falls back to English`() {
     assertEquals("en", LocaleResolver(Settings.Locales(default = "de"), available).default)
   }
+
+  @Test fun `a chosen language beats every rule`() {
+    assertEquals("es", resolver.resolve("RU", Locale.GERMANY, chosen = "es"))
+  }
+
+  @Test fun `a choice without its file falls back to the rules`() {
+    assertEquals("ru", resolver.resolve("RU", Locale.US, chosen = "it"))
+  }
 }

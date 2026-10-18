@@ -2,6 +2,11 @@
 
 The “Release” workflow takes the notes for a version from its section here, unless you type them into its `changelog` field. The same notes go to GitHub and Modrinth.
 
+## 2.3.0
+
+- 🗣️ **Players choose their own language.** `/mojoins language` lists the languages by their own names, each a click away; `/mojoins language ru` picks one, and `/mojoins language auto` hands the choice back to the plugin. The choice beats the IP and game-language rules for every line the player reads, and it stays across restarts. Every player can use it; no permission needed.
+- New messages in every language: `language_list`, `language_auto_name`, `language_set`, `language_auto`, `language_unknown`. `usage` now names `/mojoins language`. Files from 2.2 keep working; the new keys come from the bundled texts until you add them.
+
 ## 2.2.0
 
 - 🧩 **MiniPlaceholders.** Join and quit lines take its tags, like `<luckperms_prefix>`, for the player who joined or left. Mo’Joins adds `<mojoins_language>`, `<mojoins_country>`, and `<mojoins_silent>` for TAB and other plugins. MiniPlaceholders is optional.

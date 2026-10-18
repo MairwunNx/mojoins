@@ -117,7 +117,9 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
 
   fun country(player: Player): String? = countries[player.uniqueId]
 
-  fun languageOf(player: Player, locale: Locale = player.locale()): String = plugin.resolver.resolve(countries[player.uniqueId], locale)
+  /** The language a player reads: their own choice, else the one picked by country and game language. The server thread only. */
+  fun languageOf(player: Player, locale: Locale = player.locale()): String =
+    plugin.resolver.resolve(countries[player.uniqueId], locale, plugin.choice.get(player))
 
   fun seen(player: UUID): Seen? = seen[player]
 

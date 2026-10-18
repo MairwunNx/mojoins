@@ -12,6 +12,7 @@
 - ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
 - 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
 - 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
+- 🗣️ **Players choose their own language:** `/mojoins language` lists the languages, `/mojoins language ru` picks one, `/mojoins language auto` hands the choice back to the plugin.
 - 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
 - 👻 **Vanish-aware:** a player hidden by SuperVanish, PremiumVanish, Essentials, or any plugin that marks them `vanished` joins and leaves without a line, sound, or particle, and `<online>` doesn’t count them.
 - 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
@@ -46,7 +47,7 @@ The plugin tries the sources in `locales.sources`, in order:
 1. **`ip`:** the country of the player’s IP address. `locales.countries` maps languages to country codes: Russia, Belarus, and Kazakhstan get Russian; Spain and Latin America get Spanish; Brazil and Portugal get Portuguese; Germany, Austria, and Switzerland get German.
 2. **`client`:** the language set in the player’s game, when a file in `lang/` matches it.
 
-When nothing matches, the player gets `locales.default`. Check what a player got with `/mojoins locale <player>`.
+When nothing matches, the player gets `locales.default`. A player who chose a language with `/mojoins language` gets it before any of these rules, until they run `/mojoins language auto`. Check what a player got with `/mojoins locale <player>`.
 
 The country lookup needs no account and sends no address anywhere. On the first start, the plugin downloads DB-IP’s free country database (4 MB, 8 MB unpacked) into `plugins/MoJoins/geoip/` and refreshes it every 30 days. Players who connect through a proxy or a relay show up with its address, so they get the relay’s country.
 
@@ -62,11 +63,12 @@ A key missing from a language file comes from the default language. An empty str
 
 | Command | What it does |
 |---|---|
+| `/mojoins language [code\|auto]` | Lists the languages, sets yours, or with `auto` lets the plugin pick again |
 | `/mojoins reload` | Reloads `config.yml` and the language files |
 | `/mojoins locale [player]` | Shows a player’s language, country, and game language |
 | `/mojoins silent` | Turns silent mode on or off for you |
 
-The first two need `mojoins.admin`, the last `mojoins.silent`; operators have both by default. Silent mode stays on across restarts and works only while you hold `mojoins.silent`. It hides the chat lines, sounds, and particles; you still show up in the player list.
+Every player can use `/mojoins language`; the choice stays across restarts. `reload` and `locale` need `mojoins.admin`, `silent` needs `mojoins.silent`; operators have both by default. Silent mode stays on across restarts and works only while you hold `mojoins.silent`. It hides the chat lines, sounds, and particles; you still show up in the player list.
 
 ## PlaceholderAPI
 
