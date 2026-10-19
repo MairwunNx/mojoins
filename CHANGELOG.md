@@ -2,6 +2,10 @@
 
 The “Release” workflow takes the notes for a version from its section here, unless you type them into its `changelog` field. The same notes go to GitHub and Modrinth.
 
+## 2.3.1
+
+- Built against Paper API 26.3 build 205. Nothing changes in how the plugin works.
+
 ## 2.3.0
 
 - 🗣️ **Players choose their own language.** `/mojoins language` lists the languages by their own names, each a click away; `/mojoins language ru` picks one, and `/mojoins language auto` hands the choice back to the plugin. The choice beats the IP and game-language rules for every line the player reads, and it stays across restarts. Every player can use it; no permission needed.
