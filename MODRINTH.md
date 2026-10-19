@@ -20,11 +20,21 @@
 
 ## Install
 
-1. Put the jar in your server’s `plugins/` folder and restart the server.
-2. Edit `plugins/MoJoins/config.yml` and the messages in `plugins/MoJoins/lang/`.
-3. Run `/mojoins reload`.
+Mo’Joins needs Paper 26.3 or a fork of it, like Purpur, on Java 25. PlaceholderAPI, MiniPlaceholders, and Plan are optional.
 
-Mo’Joins needs Paper 26.3 or a fork of it, like Purpur, on Java 25.
+**With Docker (recommended).** In [itzg/minecraft-server](https://docker-minecraft-server.readthedocs.io), name it and the server fetches it:
+
+```yaml
+environment:
+  TYPE: PAPER
+  VERSION: "26.3"
+  MODRINTH_PROJECTS: |
+    mojoins
+```
+
+**By hand.** Put the jar in `plugins/` and restart the server.
+
+On its first start Mo’Joins writes `plugins/MoJoins/config.yml` and the messages in `plugins/MoJoins/lang/`. Change a line there, like `join: "<green>+</green> <white><player></white> <gray>joined, <online> online</gray>"` in `lang/en.yml`, and run `/mojoins reload`.
 
 ## How a player gets their language
 

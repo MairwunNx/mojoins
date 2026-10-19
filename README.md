@@ -1,5 +1,15 @@
 # Mo’Joins
 
+<p align="center">
+  <a href="https://modrinth.com/plugin/mojoins"><img alt="Modrinth" src="https://img.shields.io/modrinth/dt/mojoins?logo=modrinth&label=Modrinth&color=00AF5C"></a>
+  <a href="https://hangar.papermc.io/MairwunNx/MoJoins"><img alt="Hangar" src="https://img.shields.io/hangar/dt/MoJoins?label=Hangar&color=1E88E5"></a>
+  <a href="https://github.com/MairwunNx/mojoins/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/MairwunNx/mojoins?label=release"></a>
+  <img alt="Paper 26.3" src="https://img.shields.io/badge/Paper-26.3-F7CF0D">
+  <img alt="Java 25" src="https://img.shields.io/badge/Java-25-E76F00">
+  <a href="https://github.com/MairwunNx/mojoins/actions/workflows/build.yml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/MairwunNx/mojoins/build.yml?branch=master&label=build"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/MairwunNx/mojoins"></a>
+</p>
+
 🎉 **Mo’Joins** greets players on Paper servers in their own language. It replaces the vanilla join and quit lines with your own MiniMessage text, welcomes newcomers with a personal message, and plays a sound and a ring of particles when someone joins. A firework and potion effects are there if you want them.
 
 [Русская версия](https://github.com/MairwunNx/mojoins/blob/master/README.RU.md)
@@ -28,17 +38,46 @@ Mo’Joins runs on Moonlands, my hard survival server with friends. Come in and 
 
 Join at `minecraft.mairwunnx.com`. The site has the live map, player stats, and the hall of fame.
 
-## Requirements
-
-- Paper 26.3 or a fork of it, like Purpur
-- Java 25
-
 ## Install
 
-1. Download the jar from [Releases](https://github.com/MairwunNx/mojoins/releases).
-2. Put it in your server’s `plugins/` folder and restart the server.
-3. Edit `plugins/MoJoins/config.yml` and the files in `plugins/MoJoins/lang/`.
-4. Run `/mojoins reload`.
+Mo’Joins needs Paper 26.3 or a fork of it, like Purpur, on Java 25. PlaceholderAPI, MiniPlaceholders, and Plan are optional.
+
+### With Docker (recommended)
+
+If your server runs in [itzg/minecraft-server](https://docker-minecraft-server.readthedocs.io), it fetches Mo’Joins itself. Name it in `MODRINTH_PROJECTS`:
+
+```yaml
+services:
+  minecraft:
+    image: itzg/minecraft-server:java25
+    environment:
+      EULA: "TRUE"
+      TYPE: PAPER
+      VERSION: "26.3"
+      MODRINTH_PROJECTS: |
+        mojoins
+    ports: ["25565:25565"]
+    volumes: ["./data:/data"]
+```
+
+`mojoins:2.3.1` pins a version. The optional plugins go on the same list, one per line: `placeholderapi`, `plan`. To take Mo’Joins from GitHub instead, use `PLUGINS: https://github.com/MairwunNx/mojoins/releases/latest/download/mojoins.jar`.
+
+### By hand
+
+1. Download the jar from [Modrinth](https://modrinth.com/plugin/mojoins), [Hangar](https://hangar.papermc.io/MairwunNx/MoJoins), or [GitHub](https://github.com/MairwunNx/mojoins/releases/latest/download/mojoins.jar).
+2. Put it in `plugins/` and restart the server.
+
+### First steps
+
+On its first start Mo’Joins writes `plugins/MoJoins/config.yml` and a file per language in `plugins/MoJoins/lang/`, and downloads the country database. Join the server, and your join line greets you in your language.
+
+To change what everyone reads, edit a line in `lang/en.yml`:
+
+```yaml
+join: "<green>+</green> <white><player></white> <gray>joined, <online> online</gray>"
+```
+
+Run `/mojoins reload`, and the next join reads “+ Steve joined, 4 online”. The other files in `lang/` hold the same line in their languages.
 
 ## How a player gets their language
 
@@ -67,6 +106,14 @@ A key missing from a language file comes from the default language. An empty str
 | `/mojoins reload` | Reloads `config.yml` and the language files |
 | `/mojoins locale [player]` | Shows a player’s language, country, and game language |
 | `/mojoins silent` | Turns silent mode on or off for you |
+
+Say a friend from Moscow plays with an English game. `/mojoins locale Steve` answers:
+
+```
+Steve: language ru, country RU, game language en_US
+```
+
+The IP won over the game language. If Steve would rather read English, he runs `/mojoins language en`.
 
 Every player can use `/mojoins language`; the choice stays across restarts. `reload` and `locale` need `mojoins.admin`, `silent` needs `mojoins.silent`; operators have both by default. Silent mode stays on across restarts and works only while you hold `mojoins.silent`. It hides the chat lines, sounds, and particles; you still show up in the player list.
 
@@ -113,9 +160,9 @@ AI wrote parts of the documentation and some of the code: the serializers and th
 
 ## Related projects
 
-[MCBuddy Server](https://github.com/mcbuddy-ai/mcbuddy-server)—🛠️⚡ the backend for MCBuddy, an AI assistant for Minecraft, built on OpenRouter.
+[Allay Server](https://github.com/allay-ai/server)—🛠️⚡ the backend for Allay, an AI helper for Minecraft, built on OpenRouter.
 
-[MCBuddy Spigot](https://github.com/mcbuddy-ai/mcbuddy-spigot)—💬 brings MCBuddy into the game: ask the AI anything with `/ask`, right in the chat. 🎮
+[Allay](https://github.com/allay-ai/minecraft)—🪽 brings Allay into the game: ask the AI anything with `/ask`, right in the chat. 🎮
 
 ## From the same author
 

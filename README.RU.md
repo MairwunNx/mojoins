@@ -1,5 +1,15 @@
 # Mo’Joins
 
+<p align="center">
+  <a href="https://modrinth.com/plugin/mojoins"><img alt="Modrinth" src="https://img.shields.io/modrinth/dt/mojoins?logo=modrinth&label=Modrinth&color=00AF5C"></a>
+  <a href="https://hangar.papermc.io/MairwunNx/MoJoins"><img alt="Hangar" src="https://img.shields.io/hangar/dt/MoJoins?label=Hangar&color=1E88E5"></a>
+  <a href="https://github.com/MairwunNx/mojoins/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/MairwunNx/mojoins?label=release"></a>
+  <img alt="Paper 26.3" src="https://img.shields.io/badge/Paper-26.3-F7CF0D">
+  <img alt="Java 25" src="https://img.shields.io/badge/Java-25-E76F00">
+  <a href="https://github.com/MairwunNx/mojoins/actions/workflows/build.yml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/MairwunNx/mojoins/build.yml?branch=master&label=build"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/MairwunNx/mojoins"></a>
+</p>
+
 🎉 **Mo’Joins** приветствует игроков на серверах Paper на их родном языке. Плагин заменяет ванильные строки о входе и выходе вашим текстом в MiniMessage, встречает новичков личным приветствием, а при входе играет звук и рисует кольцо частиц. Фейерверк и эффекты зелий — по желанию.
 
 [English version](https://github.com/MairwunNx/mojoins/blob/master/README.md)
@@ -28,17 +38,46 @@ Mo’Joins работает на Moonlands — моём сервере со сл
 
 Адрес для игроков из России — `ru.minecraft.mairwunnx.com`, для остальных — `minecraft.mairwunnx.com`. На сайте — живая карта, статистика игроков и зал славы.
 
-## Требования
-
-- Paper 26.3 или его форк, например Purpur
-- Java 25
-
 ## Установка
 
-1. Скачайте jar из [релизов](https://github.com/MairwunNx/mojoins/releases).
-2. Положите его в папку `plugins/` сервера и перезапустите сервер.
-3. Настройте `plugins/MoJoins/config.yml` и файлы в `plugins/MoJoins/lang/`.
-4. Выполните `/mojoins reload`.
+Mo’Joins нужен Paper 26.3 или его форк, например Purpur, на Java 25. PlaceholderAPI, MiniPlaceholders и Plan — по желанию.
+
+### Через Docker (рекомендуем)
+
+Если сервер работает в [itzg/minecraft-server](https://docker-minecraft-server.readthedocs.io), он сам скачает Mo’Joins. Достаточно назвать его в `MODRINTH_PROJECTS`:
+
+```yaml
+services:
+  minecraft:
+    image: itzg/minecraft-server:java25
+    environment:
+      EULA: "TRUE"
+      TYPE: PAPER
+      VERSION: "26.3"
+      MODRINTH_PROJECTS: |
+        mojoins
+    ports: ["25565:25565"]
+    volumes: ["./data:/data"]
+```
+
+`mojoins:2.3.1` закрепляет версию. Необязательные плагины добавляются в тот же список, по одному на строку: `placeholderapi`, `plan`. Чтобы брать Mo’Joins с GitHub, укажите `PLUGINS: https://github.com/MairwunNx/mojoins/releases/latest/download/mojoins.jar`.
+
+### Вручную
+
+1. Скачайте jar с [Modrinth](https://modrinth.com/plugin/mojoins), [Hangar](https://hangar.papermc.io/MairwunNx/MoJoins) или [GitHub](https://github.com/MairwunNx/mojoins/releases/latest/download/mojoins.jar).
+2. Положите его в `plugins/` и перезапустите сервер.
+
+### Первые шаги
+
+При первом запуске Mo’Joins создаёт `plugins/MoJoins/config.yml` и по файлу на каждый язык в `plugins/MoJoins/lang/`, а ещё скачивает базу стран. Зайдите на сервер — строка о входе встретит вас на вашем языке.
+
+Чтобы поменять то, что читают все, поправьте строку в `lang/ru.yml`:
+
+```yaml
+join: "<green>+</green> <white><player></white> <gray>зашёл, в сети <online></gray>"
+```
+
+Выполните `/mojoins reload`, и следующий вход покажет «+ Steve зашёл, в сети 4». В остальных файлах `lang/` та же строка на других языках.
 
 ## Как выбирается язык
 
@@ -67,6 +106,14 @@ Mo’Joins работает на Moonlands — моём сервере со сл
 | `/mojoins reload` | Перечитывает `config.yml` и файлы языков |
 | `/mojoins locale [игрок]` | Показывает язык игрока, его страну и язык игры |
 | `/mojoins silent` | Включает или выключает для вас тихий режим |
+
+Допустим, друг из Москвы играет с английским языком игры. `/mojoins locale Steve` ответит:
+
+```
+Steve: язык ru, страна RU, язык игры en_US
+```
+
+IP оказался важнее языка игры. Если Steve удобнее читать по-английски, он выполнит `/mojoins language en`.
 
 `/mojoins language` доступна каждому игроку, выбор сохраняется между перезапусками. `reload` и `locale` требуют `mojoins.admin`, `silent` — `mojoins.silent`; у операторов оба права есть по умолчанию. Тихий режим сохраняется между перезапусками и действует, пока у вас есть `mojoins.silent`. Он прячет строки в чате, звуки и частицы, но в списке игроков вас видно.
 
