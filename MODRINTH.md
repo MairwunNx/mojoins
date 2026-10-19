@@ -1,71 +1,40 @@
 # Mo’Joins
 
-🎉 **Mo’Joins** greets players in their own language. It replaces the vanilla join and quit lines with your own text, welcomes newcomers with a personal message, and plays a sound and a ring of particles when someone joins.
+🎉 **Mo’Joins** greets players on Paper servers in their own language. It replaces the vanilla join and quit lines with your text, welcomes newcomers personally, and marks each join with a sound and a ring of particles.
 
 ## What you get
 
-- 🌍 **Every player reads their own language.** The plugin finds the player’s country by IP and picks a language for it: English, Russian, Spanish, Portuguese, and German come bundled. Everyone in the chat sees the same join line, each in their own language.
-- 📨 **Messages for every moment:** a join line, a personal welcome on the first join, a “say hi” line to everyone else, and a quit line. Write them in [MiniMessage](https://docs.advntr.dev/minimessage/format): colors, gradients, clickable links.
-- 🔊 **Sounds** for a join and for a first join.
-- ✨ **A ring of particles** around the player who joined, and an optional **firework** whose blast hurts nobody.
-- 🛡️ **Potion effects on join**, off by default: a few seconds of resistance, say.
-- 📜 **The server log keeps the vanilla “joined the game” lines**, so tools that read the log still work.
-- 🗣️ **Players choose their own language:** `/mojoins language` lists the languages, `/mojoins language ru` picks one, `/mojoins language auto` hands the choice back to the plugin.
-- 🤫 **Silent joins for admins:** `/mojoins silent` hides your joins and quits from everyone else.
-- 👻 **Vanish-aware:** a player hidden by SuperVanish, PremiumVanish, Essentials, or any plugin that marks them `vanished` joins and leaves without a line, sound, or particle, and `<online>` doesn’t count them.
-- 🧩 **PlaceholderAPI**, if you have it: `<papi:player_health>` in a message shows `%player_health%`.
-- 🧩 **MiniPlaceholders**, if you have it: its tags work in messages, and `<mojoins_language>`, `<mojoins_country>`, `<mojoins_silent>` work in TAB and elsewhere.
-- 📊 **Plan**, if you have it: each player’s language and silent mode on their page, and a pie of languages on the server’s.
+- 🌍 **Every player reads their own language.** Mo’Joins picks it by IP: English, Russian, Spanish, Portuguese, and German come bundled, and you can add more.
+- 📨 **A line for every moment:** a join line, a personal welcome on the first join, a “say hi” line for everyone else, and a quit line, all in MiniMessage.
+- ✨ **Sounds, a ring of particles, and an optional firework** whose blast hurts nobody.
+- 🗣️ **Players choose for themselves:** `/mojoins language` lists the languages, each a click away.
+- 🤫 **Silent joins for admins,** and vanished players join and leave without a trace.
+- 🧩 **Works with PlaceholderAPI, MiniPlaceholders, and Plan,** all optional.
+- 🔒 **No account, no data sent out:** the country database lives on your server.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
 
-## Install
+## Get started
 
-Mo’Joins needs Paper 26.3 or a fork of it, like Purpur, on Java 25. PlaceholderAPI, MiniPlaceholders, and Plan are optional.
+1. Put the jar in `plugins/` on Paper 26.3 or a fork, like Purpur, with Java 25. With [itzg/minecraft-server](https://docker-minecraft-server.readthedocs.io), add `mojoins` to `MODRINTH_PROJECTS` instead.
+2. Restart the server, join, and see your line greet you.
+3. Change it in `plugins/MoJoins/lang/en.yml` and run `/mojoins reload`.
 
-**With Docker (recommended).** In [itzg/minecraft-server](https://docker-minecraft-server.readthedocs.io), name it and the server fetches it:
+## Documentation
 
-```yaml
-environment:
-  TYPE: PAPER
-  VERSION: "26.3"
-  MODRINTH_PROJECTS: |
-    mojoins
-```
+The [wiki](https://github.com/MairwunNx/mojoins/wiki) walks you through everything: [Installation](https://github.com/MairwunNx/mojoins/wiki/Installation), [First steps](https://github.com/MairwunNx/mojoins/wiki/First-steps), [How a player gets their language](https://github.com/MairwunNx/mojoins/wiki/How-a-player-gets-their-language), [Adding a language](https://github.com/MairwunNx/mojoins/wiki/Adding-a-language), [Commands and permissions](https://github.com/MairwunNx/mojoins/wiki/Commands-and-permissions), [Messages](https://github.com/MairwunNx/mojoins/wiki/Messages), [Configuration](https://github.com/MairwunNx/mojoins/wiki/Configuration), [PlaceholderAPI](https://github.com/MairwunNx/mojoins/wiki/PlaceholderAPI), [MiniPlaceholders](https://github.com/MairwunNx/mojoins/wiki/MiniPlaceholders), [Plan](https://github.com/MairwunNx/mojoins/wiki/Plan), and the [FAQ](https://github.com/MairwunNx/mojoins/wiki/FAQ). Source code and issues live on [GitHub](https://github.com/MairwunNx/mojoins).
 
-**By hand.** Put the jar in `plugins/` and restart the server.
+## Related projects
 
-On its first start Mo’Joins writes `plugins/MoJoins/config.yml` and the messages in `plugins/MoJoins/lang/`. Change a line there, like `join: "<green>+</green> <white><player></white> <gray>joined, <online> online</gray>"` in `lang/en.yml`, and run `/mojoins reload`.
+- **[Moonlands](https://minecraft.mairwunnx.com)**—the hard-survival server where all of these run.
+- **[WorldAPI](https://github.com/MairwunNx/minecraft-worldapi)**—REST and WebSocket API to a Paper server’s world, players, and stats.
+- **[Minecraft MCP](https://github.com/MairwunNx/minecraft-mcp)**—lets an AI client read and run a server through WorldAPI.
+- **[Allay](https://github.com/allay-ai/minecraft)**—an AI helper in the game: ask with `/ask`, right in the chat.
+- **[Allay Server](https://github.com/allay-ai/server)**—the backend behind Allay.
+- **[Mo’Afks](https://github.com/MairwunNx/moafks)**—a safe AFK mode that doesn’t block the night.
+- **[Mo’Bosses](https://github.com/MairwunNx/mobosses)**—monsters that spawn as bosses with classes, abilities, and loot.
+- **[minecraft-exporter](https://github.com/MairwunNx/minecraft-exporter)**—Prometheus metrics from WorldAPI.
+- **[minecraft-grafana](https://github.com/MairwunNx/minecraft-grafana)**—the Grafana dashboard for WorldAPI.
 
-## How a player gets their language
-
-1. **By IP.** The plugin looks up the player’s country and checks `locales.countries`: Russia gets Russian, Brazil gets Portuguese, Germany gets German, and so on. You can change the lists.
-2. **By game language.** When the country isn’t listed, the plugin takes the language set in the player’s game, if a file in `lang/` matches it.
-3. **Default.** Everyone else gets `locales.default`, English out of the box.
-
-A player who chose a language with `/mojoins language` gets it before any of these rules.
-
-The country lookup needs no account and sends no address anywhere. On the first start, the plugin downloads a free country database (4 MB) and refreshes it every month. Players who connect through a proxy show up with the proxy’s address, so they get the proxy’s country.
-
-**Add a language:** copy `lang/en.yml` to, say, `lang/it.yml`, translate it, add `it: [ IT, SM, VA ]` to `locales.countries`, and run `/mojoins reload`.
-
-## Placeholders
-
-`<player>` is the player’s name, `<display_name>` their display name, `<online>` the number of players online. With [PlaceholderAPI](https://modrinth.com/plugin/placeholderapi) installed, `<papi:name>` shows `%name%` for that player, like `<papi:luckperms_prefix><player>`. Mo’Joins doesn’t look for `%…%` in your text, so a percent sign stays a percent sign. An empty message turns it off for that language.
-
-## Commands and permissions
-
-| Command | What it does |
-|---|---|
-| `/mojoins language [code\|auto]` | Lists the languages, sets yours, or with `auto` lets the plugin pick again |
-| `/mojoins reload` | Reloads the config and the messages |
-| `/mojoins locale [player]` | Shows a player’s language, country, and game language |
-| `/mojoins silent` | Turns silent mode on or off for you |
-
-Every player can use `/mojoins language`; the choice stays across restarts. `reload` and `locale` need `mojoins.admin`, `silent` needs `mojoins.silent`; operators have both by default. Silent mode stays on across restarts. It hides the chat lines, sounds, and particles; you still show up in the player list.
-
-## Links
-
-- Source code, issues, and the full config: [GitHub](https://github.com/MairwunNx/mojoins)
-- From the same author: [Mo’Bosses](https://github.com/mairwunnx/mobosses), an RPG plugin that turns ordinary mobs into epic bosses
+---
 
 [IP Geolocation by DB-IP](https://db-ip.com), licensed under CC BY 4.0.

@@ -1,12 +1,13 @@
 # Mo’Joins: notes for AI agents
 
-A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessage text, each player reading it in their own language, picked by IP. README.md explains it for players and server owners; README.RU.md is its Russian copy. Moonlands, the owner's server (MairwunNx/minecraft), runs it.
+A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessage text, each player reading it in their own language, picked by IP. README.md is the shop window (README.RU.md its Russian copy); the GitHub wiki (MairwunNx/mojoins.wiki) is the manual for server owners and developers. Moonlands, the owner's server (MairwunNx/minecraft), runs it.
 
 ## Talking to the owner
 
 - Reply in Russian, address the owner as «вы». Quotes «ёлочки», nested „лапки“, an em dash with spaces « — ».
-- Code, comments, commit messages, README.md, and the English language file are in English: curly quotes, an em dash without spaces or an en dash with spaces, never a hyphen as a dash.
+- Code, comments, commit messages, README.md, the wiki (English only), and the English language file are in English: curly quotes, an em dash without spaces or an en dash with spaces, never a hyphen as a dash.
 - README.RU.md and `lang/ru.yml` follow Russian typography. Change both READMEs and MODRINTH.md together.
+- README.md and MODRINTH.md only show the plugin off: the pitch, “What you get”, “Get started”, links into the wiki, “Related projects” (the family's shared list), and the DB-IP credit its license requires. No License, build, stack, or reference sections there: commands, config keys, integrations, building, and releasing live in the wiki. Edit the wiki by cloning `https://github.com/MairwunNx/mojoins.wiki.git`.
 
 ## How it fits together
 
@@ -76,7 +77,7 @@ Where the versions live, for `/update-deps` and `/update-minecraft` (both in `.c
 
 ## Modrinth
 
-The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs MODRINTH.md as the description. MODRINTH.md is for server owners: no build, stack, or related projects, and no Moonlands banner. A change to what the plugin does goes in README.md, README.RU.md, and MODRINTH.md. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
+The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs MODRINTH.md as the description. MODRINTH.md is for server owners: no build or stack, and no Moonlands banner; it links to the wiki for the rest. A change to what the plugin does goes in the wiki page it touches, and in README.md, README.RU.md, and MODRINTH.md when it changes “What you get”. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
 
 ## Commits
 
