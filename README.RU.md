@@ -3,6 +3,7 @@
 <p align="center">
   <a href="https://modrinth.com/plugin/mojoins"><img alt="Modrinth" src="https://img.shields.io/modrinth/dt/mojoins?logo=modrinth&label=Modrinth&color=00AF5C"></a>
   <a href="https://hangar.papermc.io/MairwunNx/MoJoins"><img alt="Hangar" src="https://img.shields.io/hangar/dt/MoJoins?label=Hangar&color=1E88E5"></a>
+  <a href="https://www.curseforge.com/projects/1766153"><img alt="CurseForge" src="https://img.shields.io/curseforge/dt/1766153?logo=curseforge&label=CurseForge&color=F16436"></a>
   <a href="https://github.com/MairwunNx/mojoins/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/MairwunNx/mojoins?label=release"></a>
   <img alt="Paper 26.3" src="https://img.shields.io/badge/Paper-26.3-F7CF0D">
   <img alt="Java 25" src="https://img.shields.io/badge/Java-25-E76F00">
