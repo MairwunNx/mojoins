@@ -4,7 +4,7 @@ The “Release” workflow takes the notes for a version from its section here, 
 
 ## 2.3.2
 
-- Built against Paper API 26.3 build 223. Nothing changes in how the plugin works.
+- Built against Paper API 26.3 build 223, with kotlinx.serialization 1.12.0. Nothing changes in how the plugin works.
 
 ## 2.3.1
 
