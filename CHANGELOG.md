@@ -2,6 +2,10 @@
 
 The “Release” workflow takes the notes for a version from its section here, unless you type them into its `changelog` field. The same notes go to GitHub and Modrinth.
 
+## 2.3.3
+
+- Built against Paper API 26.3 build 237. Nothing changes in how the plugin works.
+
 ## 2.3.2
 
 - Built against Paper API 26.3 build 223, with kotlinx.serialization 1.12.0. Nothing changes in how the plugin works.
