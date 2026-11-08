@@ -64,7 +64,8 @@ tasks.shadowJar {
 tasks.jar { enabled = false }
 tasks.assemble { dependsOn(tasks.shadowJar) }
 
-// `./gradlew modrinth` with MODRINTH_TOKEN set; the release workflow runs it when asked to.
+// `./gradlew modrinthSyncBody` with MODRINTH_TOKEN set syncs the description; the release workflow runs it when asked
+// to, and uploads the jar with scripts/modrinth.py, since Minotaur can't mark a version server only.
 modrinth {
   token = providers.environmentVariable("MODRINTH_TOKEN")
   projectId = "mojoins"
@@ -78,10 +79,6 @@ modrinth {
   changelog = (findProperty("changelogFile") as String?)?.let { file(it).readText() }
     ?: "https://github.com/MairwunNx/mojoins/releases/tag/v${project.version}"
   syncBodyFrom = file("MODRINTH.md").readText()
-}
-
-tasks.modrinth {
-  dependsOn(tasks.modrinthSyncBody)
 }
 
 // `./gradlew publishPluginPublicationToHangar` with HANGAR_TOKEN set; the release workflow runs it when asked to.

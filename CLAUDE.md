@@ -77,7 +77,7 @@ Where the versions live, for `/update-deps` and `/update-minecraft` (both in `.c
 
 ## Modrinth
 
-The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinth`, which uploads the jar as a version and syncs MODRINTH.md as the description. MODRINTH.md is for server owners: no build or stack, and no Moonlands banner; it links to the wiki for the rest. A change to what the plugin does goes in the wiki page it touches, and in README.md, README.RU.md, and MODRINTH.md when it changes “What you get”. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
+The project is `mojoins` (id `dV7GQTnC`), MIT. The “Release” workflow has a `modrinth` switch, off by default: on, it runs `./gradlew modrinthSyncBody`, which syncs MODRINTH.md as the description, then `scripts/modrinth.py`, which uploads the jar through Modrinth's v3 API as `X.Y.Z` for Paper and Purpur, marked `server_only`, and skips a version already there. Minotaur can't set a version's `environment`, and while the project is in review Modrinth refuses a version without it (“project cannot have required validation nags while in review”). MODRINTH.md is for server owners: no build or stack, and no Moonlands banner; it links to the wiki for the rest. A change to what the plugin does goes in the wiki page it touches, and in README.md, README.RU.md, and MODRINTH.md when it changes “What you get”. It uses the `MODRINTH_TOKEN` secret; locally the same token is in `~/.secrets/cloud.env`. The icon is `media/icon.png`. Never put the token in the repo.
 
 ## CurseForge
 
