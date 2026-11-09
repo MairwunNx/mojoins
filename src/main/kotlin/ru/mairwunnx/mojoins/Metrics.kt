@@ -80,7 +80,7 @@ class PluginMetrics(private val plugin: MoJoinsPlugin) {
   }
 
   companion object {
-    /** The plugin's id on bstats.org; 0 keeps bStats off. */
-    const val BSTATS_ID = 0
+    /** The plugin's id on bstats.org, at bstats.org/plugin/bukkit/MoJoins/35227; 0 keeps bStats off. */
+    const val BSTATS_ID = 35227
   }
 }
