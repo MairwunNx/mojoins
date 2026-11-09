@@ -5,7 +5,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 ## Talking to the owner
 
 - Reply in Russian, address the owner as «вы». Quotes «ёлочки», nested „лапки“, an em dash with spaces « — ».
-- Code, comments, commit messages, README.md, the wiki (English only), and the English language file are in English: curly quotes, an em dash without spaces or an en dash with spaces, never a hyphen as a dash.
+- Code, comments, commit messages, README.md, the wiki (English only), and the English language file are in English: curly quotes, an en dash with spaces (never an em dash glued to the words or a hyphen as a dash), and no semicolon between clauses: a full stop, a comma, or a colon instead.
 - README.RU.md and `lang/ru.yml` follow Russian typography. Change both READMEs and MODRINTH.md together.
 - README.md and MODRINTH.md only show the plugin off: the pitch, “What you get”, “Get started”, links into the wiki, “Related projects” (the family's shared list), and the DB-IP credit its license requires. No License, build, stack, or reference sections there: commands, config keys, integrations, building, and releasing live in the wiki. Edit the wiki by cloning `https://github.com/MairwunNx/mojoins.wiki.git`.
 
