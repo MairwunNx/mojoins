@@ -2,6 +2,10 @@
 
 The “Release” workflow takes the notes for a version from its section here, unless you type them into its `changelog` field. The same notes go to GitHub and Modrinth.
 
+## 2.4.0
+
+- 📈 **bStats.** Mo’Joins counts the languages it picks, how it picked them (by IP, by game language, by the player’s choice, or by default), and first joins, and sends the counts to bStats. `metrics: false` in config.yml turns it off for Mo’Joins alone.
+
 ## 2.3.4
 
 - Built against Paper API 26.3 build 245. Nothing changes in how the plugin works.

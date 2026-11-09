@@ -16,6 +16,7 @@ class MoJoinsPlugin : JavaPlugin() {
   lateinit var listener: JoinListener; private set
   val silent by lazy { Silent(NamespacedKey(this, "silent")) }
   val choice by lazy { LanguageChoice(NamespacedKey(this, "language")) }
+  val metrics by lazy { PluginMetrics(this) }
 
   private val fireworkKey by lazy { NamespacedKey(this, "join_firework") }
   private var geoIpTask: BukkitTask? = null
@@ -38,6 +39,7 @@ class MoJoinsPlugin : JavaPlugin() {
   }
 
   override fun onDisable() {
+    metrics.stop()
     miniPlaceholders?.close()
     geoIpTask?.cancel()
     geoIp.close()
@@ -57,6 +59,7 @@ class MoJoinsPlugin : JavaPlugin() {
     if (LocaleResolver.normalize(settings.locales.default) !in texts) log.warn("locales.default: no lang/${settings.locales.default}.yml, using ${resolver.default}")
 
     setUpGeoIp()
+    metrics.apply(settings.metrics)
     return ok
   }
 

@@ -16,6 +16,8 @@ import kotlinx.serialization.builtins.serializer
 data class Settings(
   val enabled: Boolean = true,
   val debug: Boolean = false,
+  /** Sends anonymous usage counts to bStats; false turns them off for this plugin. */
+  val metrics: Boolean = true,
   val locales: Locales = Locales(),
   val geoip: GeoIpSettings = GeoIpSettings(),
   val broadcast: Broadcast = Broadcast(),

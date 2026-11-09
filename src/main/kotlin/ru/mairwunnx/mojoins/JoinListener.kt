@@ -51,9 +51,11 @@ class JoinListener(private val plugin: MoJoinsPlugin) : Listener {
    */
   @EventHandler(priority = EventPriority.MONITOR)
   fun onJoined(event: PlayerJoinEvent) {
-    if (!plugin.settings.enabled) return
     val player = event.player
     val firstJoin = !player.hasPlayedBefore()
+    if (firstJoin) plugin.metrics.counts.firstJoin()
+    if (!plugin.settings.enabled) return
+    plugin.resolver.pick(countries[player.uniqueId], player.locale(), plugin.choice.get(player)).let { plugin.metrics.counts.pick(it.code, it.source) }
     val broadcast = plugin.settings.broadcast
 
     if (plugin.silent.isOn(player)) {

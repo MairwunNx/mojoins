@@ -7,6 +7,7 @@
 
 enabled: true   # false turns the plugin off; vanilla join and quit lines come back.
 debug: false    # true logs how each player's language was picked.
+metrics: true   # false turns off bStats for Mo’Joins.
 
 locales:
   # Players nothing else matches, and the console, get this language.

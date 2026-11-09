@@ -25,6 +25,7 @@ A Paper 26.3 plugin that replaces join and quit lines with configured MiniMessag
 | `Silent.kt` | Silent mode, kept in the player's persistent data and honored only with `mojoins.silent` |
 | `MiniPlaceholderTags.kt` | MiniPlaceholders, optional: messages render with the player they're about as their target, so its global and audience tags resolve for that player; `<mojoins_language>`, `<mojoins_country>`, `<mojoins_silent>` read `JoinListener.seen` |
 | `PlanData.kt` | The Plan extension: language, country, and silent mode per player, a language group, silent players online. Plan is optional and calls it from its own threads, so it reads only `JoinListener.seen`, which the server thread fills on join, locale change, `/mojoins language`, and `/mojoins silent` |
+| `Metrics.kt` | bStats: `MetricsCounts` counts language picks and first joins on the server thread, and bStats' own thread drains them every 30 minutes; `BSTATS_ID` 0 or `metrics: false` keeps it off, and any failure is one warning |
 | `Placeholders.kt` | The `<papi:name>` tag; PlaceholderAPI is an optional dependency, so its classes load only when it's there |
 
 ## Rules that keep it working
