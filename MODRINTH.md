@@ -6,7 +6,7 @@
 
 ## What you get
 
-- 🌍 **Every player reads their own language.** Mo’Joins picks it by IP: English, Russian, Spanish, Portuguese, and German come bundled, and you can add more.
+- 🌍 **Every player reads their own language.** Mo’Joins picks it by the player’s country or their game language: English, Russian, Spanish, Portuguese, and German come bundled, and you can add more.
 - 📨 **A line for every moment:** a join line, a personal welcome on the first join, a “say hi” line for everyone else, and a quit line, all in MiniMessage.
 - ✨ **Sounds, a ring of particles, and an optional firework** whose blast hurts nobody.
 - 🗣️ **Players choose for themselves:** `/mojoins language` lists the languages, each a click away.
