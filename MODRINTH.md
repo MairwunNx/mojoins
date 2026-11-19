@@ -1,5 +1,7 @@
 # Mo’Joins
 
+![Mo’Joins: greet every player in their language](https://raw.githubusercontent.com/MairwunNx/mojoins/master/media/hero.webp)
+
 🎉 **Mo’Joins** greets players on Paper servers in their own language. It replaces the vanilla join and quit lines with your text, welcomes newcomers personally, and marks each join with a sound and a ring of particles.
 
 ## What you get
@@ -12,6 +14,9 @@
 - 🧩 **Works with PlaceholderAPI, MiniPlaceholders, and Plan,** all optional.
 - 🔒 **No account, no data sent out:** the country database lives on your server.
 - ⚙️ **`/mojoins reload`** applies changes without a restart.
+
+<p align="center"><img src="https://raw.githubusercontent.com/MairwunNx/mojoins/master/media/screenshots/first-join.gif" width="760" alt="Kenji joins for the first time: “Kenji joined for the first time. Say hi!” in chat, a ring of particles, and a firework over him">
+  <br><sub>A newcomer joins: the line in chat, a ring of particles, and a firework</sub></p>
 
 ## Get started
 

@@ -1,0 +1,51 @@
+<!--
+  The hero image and social preview. Render from this folder:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=2 --window-size=1280,640 --virtual-time-budget=3000 --screenshot=hero.png "file://$PWD/hero.html"
+  magick hero.png -define webp:lossless=true ../hero.webp (README), and render with --force-device-scale-factor=1 for GitHub's social preview (under 1 MB).
+-->
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1280px;height:640px;overflow:hidden;background:#0b0d12;font-family:-apple-system,"SF Pro Display","Inter",sans-serif}
+#bg{position:absolute;left:0;top:0;width:1280px;height:640px;object-fit:cover;filter:blur(1.2px) saturate(1.05)}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,14,16,.86) 0%,rgba(10,14,16,.68) 38%,rgba(10,14,16,.15) 64%,rgba(10,14,16,0) 100%)}
+.text{position:absolute;left:64px;top:0;bottom:0;width:500px;display:flex;flex-direction:column;justify-content:center;color:#fff}
+.text h1,.text p{text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.tag{display:inline-flex;align-items:center;gap:14px;font-size:18px;font-weight:700;color:#5ff0a0;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+.tag img{width:34px;height:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+h1{margin:0;font-size:60px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h1 span{color:#2ee88a}
+p{margin:22px 0 0;font-size:22px;line-height:1.4;color:#d3d6df;max-width:470px}
+.chips{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+.chips b{font-weight:600;font-size:16px;color:#e6e8ee;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);padding:7px 12px;border-radius:8px;backdrop-filter:blur(6px)}
+.powered{margin-top:24px;display:flex;align-items:center;gap:8px;font-size:15px;color:rgba(255,255,255,.72)}
+.powered strong{color:#fff;font-weight:600}
+.made{position:absolute;left:64px;bottom:22px;font-size:12px;letter-spacing:.02em;color:rgba(255,255,255,.42)}
+.shot{position:absolute;perspective:1600px}
+.shot img{width:100%;display:block;border-radius:14px;transform:rotateY(-16deg) rotateX(4deg) rotateZ(1deg);transform-origin:left center;box-shadow:0 40px 80px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.12)}
+@font-face{font-family:"Minecraft";src:url("minecraft.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Minecraft";src:url("minecraft-bold.woff2") format("woff2");font-weight:700}
+.tag img{border-radius:8px}
+.chips{display:none}
+.chat{margin-top:26px;display:flex;flex-direction:column;gap:6px}
+.mc{font:400 17px/1 "Minecraft",monospace;color:#fff;background:rgba(0,0,0,.5);padding:7px 10px 6px 8px;width:max-content;text-shadow:2px 2px 0 rgba(0,0,0,.3);display:flex;align-items:center;gap:0}
+.mc b{font-weight:700;color:#1ABC9C;margin:0 .45em}
+.mc .gray{color:#AAAAAA}
+.mc .sym{text-shadow:none}
+.lang{font:700 11px/1 -apple-system,sans-serif;letter-spacing:.06em;color:#9ab;border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:3px 5px;margin-right:10px;text-shadow:none}
+</style></head><body>
+<img id="bg" src="../hero-background.png">
+<div class="shade"></div>
+
+<div class="text">
+<div class="tag"><img src="../icon.png">Mo’Joins</div>
+<h1>Greet every player <span>in their language</span></h1>
+<p>Join and quit lines, a welcome for newcomers, sounds, particles, and a&nbsp;firework.</p>
+<div class="chat">
+<div class="mc"><span class="lang">EN</span><span class="sym" style="background:linear-gradient(90deg,#00E676,#00C853);-webkit-background-clip:text;color:transparent">✦</span> <b>Kenji</b> <span class="gray">joined for the first time. Say hi!</span></div>
+<div class="mc"><span class="lang">RU</span><span class="sym" style="background:linear-gradient(90deg,#00E676,#00C853);-webkit-background-clip:text;color:transparent">+</span> <b>Kenji</b> <span class="gray">зашёл в игру</span></div>
+<div class="mc"><span class="lang">DE</span><span class="sym" style="background:linear-gradient(90deg,#00E676,#00C853);-webkit-background-clip:text;color:transparent">+</span> <b>Kenji</b> <span class="gray">hat das Spiel betreten</span></div>
+<div class="mc"><span class="lang">ES</span><span class="sym" style="background:linear-gradient(90deg,#26A69A,#00897B);-webkit-background-clip:text;color:transparent">−</span> <b>Kenji</b> <span class="gray">salió de la partida</span></div>
+</div>
+
+</div>
+<div class="made">Made by Pavel Erokhin</div>
+</body></html>

@@ -1,5 +1,7 @@
 # Mo’Joins
 
+![Mo’Joins: приветствие каждому игроку на его языке](https://raw.githubusercontent.com/MairwunNx/mojoins/master/media/hero.webp)
+
 <p align="center">
   <a href="https://modrinth.com/plugin/mojoins"><img alt="Modrinth" src="https://img.shields.io/modrinth/dt/mojoins?logo=modrinth&label=Modrinth&color=00AF5C"></a>
   <a href="https://hangar.papermc.io/MairwunNx/MoJoins"><img alt="Hangar" src="https://img.shields.io/hangar/dt/MoJoins?label=Hangar&color=1E88E5"></a>
@@ -27,6 +29,9 @@
 - 🧩 **Работает с PlaceholderAPI, MiniPlaceholders и Plan** — все необязательны.
 - 🔒 **Без аккаунтов и без отправки данных:** база стран лежит на вашем сервере.
 - ⚙️ **`/mojoins reload`** применяет изменения без перезапуска.
+
+<p align="center"><img src="https://raw.githubusercontent.com/MairwunNx/mojoins/master/media/screenshots/first-join.gif" width="760" alt="Kenji заходит впервые: строка в чате, кольцо частиц и фейерверк над ним">
+  <br><sub>Новичок заходит: строка в чате, кольцо частиц и фейерверк</sub></p>
 
 ## Как начать
 
